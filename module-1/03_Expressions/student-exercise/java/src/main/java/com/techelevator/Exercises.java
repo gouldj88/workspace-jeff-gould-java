@@ -252,33 +252,34 @@ public class Exercises {
 	/*
 	 15. Given 2 int values, return the larger value that is in the range 10..20 inclusive,
 	 or return 0 if neither is in that range.
-	 max1020(11, 19) → 19
-	 max1020(19, 11) → 19
-	 max1020(11, 9) → 11
+	 max1020(11, 19) => 19
+	 max1020(19, 11) => 19
+	 max1020(11, 9) => 11
 	 */
 	public int max1020(int a, int b) //
 	{
-		
-		if ((a >= 10 && a <= 20) || (b >= 10 && b <= 20)) {
-				if (a > b)
-				{
-					return a;
-				}
-				
+		//determine if a and b are in the range of 10-20 inclusive
+		boolean aInRange = (a >= 10 && a <=20);
+		boolean bInRange = (b >= 10 && b <= 20);
+		//if only one is in range, return it
+		if (aInRange && !bInRange) { // if a is in range and b is not in range, 
+			return a;
+		}
+		else if (!aInRange && bInRange) { // if a is not in range and b is in range
 			return b;
 		}
-		
-		if (a <= 10 || a >= 20 || b <= 10 || b >= 20)
-		{
-			if (a > b)
-			{
-				return a;
+		//if both are in range - return biggest one
+		if (aInRange && bInRange) { 		// if both are in range
+			if (a > b) { 					// and a is bigger than b
+				return a;					//return a
 			}
-			return b;
+			else {
+				return b;
+			}	
 		}
+		//if neither are in range - return 0
 			return 0;
 		
-		//return 0;
 	}
 
 	/*
@@ -470,12 +471,17 @@ public class Exercises {
 	 26. Return true if the given non-negative number is 1 or 2 less than a multiple of 20. So for example 38
 	 and 39 return true, but 40 returns false.
 	 (Hint: Think "mod".)
-	 less20(18) → true
-	 less20(19) → true
-	 less20(20) → false
+	 less20(18) => true
+	 less20(19) => true
+	 less20(20) => false
 	 */
 	public boolean less20(int n) {
-		return false;
+		int multiple = n % 20;
+		if (((multiple == 19) || (multiple == 18))) 
+		{
+			return true;
+		}
+		return false;                              
 	}
 
 	/*
