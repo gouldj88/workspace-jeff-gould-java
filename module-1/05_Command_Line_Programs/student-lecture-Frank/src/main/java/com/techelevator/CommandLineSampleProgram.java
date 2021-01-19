@@ -23,13 +23,14 @@ public class CommandLineSampleProgram {
 		System.out.println("You entered " + aLine); //display line entered by the user
 		
 		System.out.println("Please enter a whole number: ");
-		aLine = keyboard.nextLine();
-		System.out.println("You entered the number: " + aLine);
+		int aNumber = keyboard.nextInt(); //Get an int from the keyboard
+		keyboard.nextLine(); // remove the enter left in the keyboard buffer by nextInt
+		System.out.println("You entered the number: " + aNumber); //Show what we got
 		
-		int theNumber = Integer.parseInt(aLine);
+		// int theNumber = Integer.parseInt(aLine);
 		
 		// We can use the Interger.parseInt() or Double.parseDouble() to convert a String to a numeric
-		System.out.println("Half of that number is: " + theNumber / 2);
+		System.out.println("Half of that number is: " + aNumber / 2);
 		
 		// Get a series of values from a user and determine the sum and average
 		// 1. Ask the user to enter a value or indicate that they are done ("N" = done)
@@ -40,8 +41,8 @@ public class CommandLineSampleProgram {
 		// 3. Once they are done, display the sum and the average
 		
 		String theValue =  ""; // hold the value entered by the user
-		double sum = 0;        // hold the usm of the values they enter- dobule because we are allowing decimal values
-		int numNums = 0;       // hold hte number of values they enter
+		double sum = 0;        // hold the sum of the values they enter- double because we are allowing decimal values
+		int numNums = 0;       // hold the number of values they enter
 		
 		// In this case we will specify a never ending loop by looping while true
 		while(true) { // loop until we break out of loop

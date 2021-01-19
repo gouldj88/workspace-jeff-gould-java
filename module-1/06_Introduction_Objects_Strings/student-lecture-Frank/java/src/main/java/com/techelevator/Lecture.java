@@ -15,7 +15,23 @@ public class Lecture {
 
 		/* create an new instance of String using a literal */
 
+		/*
+		 * Two ways to create a String:
+		 * String name = new String("some value");
+		 * -or-
+		 * String name = "some value";
+		 * 
+		 * A string literal is enclosed in " "
+		 * A char literal is enclosed in ' ' 
+		 * 
+		 * A String is NOT a character and a character is NOT a String
+		 */
 
+			String softDrink = "Diet Mtn Dew";
+			
+			String beverage = softDrink + " by Pepsi";
+			
+			System.out.println(beverage); // expecting to see "Diet Mtn Dew by Pepsi"
 
 //--------------------------------------------------------------------------------------------------------		
 		System.out.println();
@@ -23,8 +39,29 @@ public class Lecture {
 		System.out.println("****** MEMBER METHODS ******");
 		System.out.println("******************************");
 		System.out.println();
+		
+		/*
+		 * 
+		 * A String is a class
+		 * 
+		 * a Class is a description of what an object of a class should look like and what the object can do.
+		 * An object is an instance of a class
+		 * 
+		 * In cooking, a recipe describes the ingredients and process for creating a food dish.
+		 * 
+		 * A cake recipe describes how to make a cake - it is NOT the cake
+		 * The cake that you make from a recipe is an instance of the recipe (an object)
+		 * 
+		 * A class contains methods to interact and manipulate objects of that class
+		 * 
+		 * A method is a function that is associated with a class
+		 * 
+		 * A member method is a method associated with a specific class
+		 * 
+		 * To use a method for a class: anObjectOfTheClass.method(paramenters)
+		 */
 
-		/* Commonly used methods:  stringname.methodname(parameters)
+		/* Commonly used String Class methods:  stringname.methodname(parameters)
 		 *
 		 * .length() - return the number of characters in a String
 		 * .charAt(index) - returns the character at the index - 0 is first character
@@ -39,12 +76,44 @@ public class Lecture {
 		 * .trim() - return the String with spaces removed from beginning and end of the String
 		 * .split(delimiter) - returns and array of strings containing the characters between the delimiter specified
 		 */
-
+		// indexes: 0123456789 10 11 12 13
+		String name = "Baker Mayfield";
+		System.out.println("The variable name contains: " + name);
+		System.out.println("The length of the value in name is: " + name.length());
+		
+		System.out.println("Does name end with 'field'? " + name.endsWith("field"));
+		System.out.println("Does the name end with the word 'Baker'? " + name.endsWith("Baker"));
+		
+		System.out.println("Does name end with 'field'? " + name.startsWith("field"));
+		System.out.println("Does the name end with the word 'Baker'? " + name.startsWith("Baker"));
+		System.out.println("Does the name end with the word 'baker'? " + name.startsWith("baker"));
+		
+		if (name.startsWith("Baker"))
+		{
+			System.out.println("Yay");
+		}
+		else {
+			System.out.println("Boo");
+		}
+		
+		System.out.println("Does the name contain 'May'? " + name.contains("May"));
+		// charAt(index) - index starts at 0 - positions start at 1
+		System.out.println("The char 'k' is at position 4 is " + name.charAt(3));
+		System.out.println("What index is 'f'? " + name.indexOf("f"));
+		System.out.println("Name in all lowercase is: " + name.toLowerCase());
+		System.out.println("Name in all uppercase is: " + name.toUpperCase());
+		//can chain methods together
+		System.out.println("name in all lowercase is: " + name.toUpperCase().indexOf("F"));
+		System.out.println("The characters from the 5th to the end of the name are: " + name.substring(4)); // gives characters from the index specified to the end (index starts at 0).
+		System.out.println("The characters from position 2 to position 8 are: " + name.substring(1, 8)); // gives me chars from the start index to the end index but NOT including char at end of index. Specify index to be one more than index you want included
+		
+		
+		
 //--------------------------------------------------------------------------------------------------------	
 		
 		/*   A String may also be created easily from an array of characters (char) */
 
-		char[] helloArray = new char[] { 'H', 'e', 'l', 'l', 'o' }; // Array of characters (String)
+		char[] helloArray = new char[] { 'H', 'e', 'l', 'l', 'o' }; // Array of characters
 		
 		String hello1 = new String(helloArray);  // Create a String using the array of characters
 		String hello2 = new String(helloArray);  // Create a String using the array of characters
@@ -84,6 +153,18 @@ public class Lecture {
 		System.out.println("****** USING .split ******");
 		System.out.println("**************************");
 		System.out.println();
+		
+		String movieTitle = "External Sunshine of the Spotless Mind";
+		//Display each word in the movie title on a separate line
+		// That means we need to split the title based on the space
+		//The String.split method will separate String into parts and return an array of Strings
+		
+		String[] wordsInTitle = movieTitle.split(" "); //separate movie title into individual words based on space
+
+		for (int i = 0; i < wordsInTitle.length; i++)
+		{                     
+			System.out.println(wordsInTitle[i]);
+		}
 
 
 	}
