@@ -447,20 +447,11 @@ public class Exercises {
 	 stringX("abxxxcd") → "abcd"
 	 stringX("xabxxxcdx") → "xabcdx"
 	 */
+	
 	public String stringX(String str) 
 	{
-	int length = str.length();
-	String keep = str.substring(1, length);
-	for (int i = 0; i < length; i++)
-	{
-		if (str.indexOf(i) == 'x')
-		{
-			str.== "";
-		}
-	}
-
-	return str.charAt(0) + keep + str.charAt(length-1);
-	
+	String keep = str.substring(1, str.length() - 1);
+	return str.charAt(0) + keep.replace("x", "") + str.charAt(str.length() - 1);
 	}
 
 	/*

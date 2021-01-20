@@ -203,9 +203,51 @@ public class Exercises {
 	//return ArrayList              takes ArrayList         and ArrayList
 	public List<Integer> interleaveLists(List<Integer> listOne, List<Integer> listTwo) 
 	{
-		ArrayList<Integer> result = new ArrayList(); // will store the values from listOne and listTwo
+		//Define what needs to be returned
+		List<Integer> newList = new ArrayList<Integer>();
 
-		return result;
+		// Code the "happy path" first - the lists are the same size
+		// Code for the "edge" cases where lists are different lengths
+		//		Interleave for the length of the shorter list
+		//			We need to figure out which array is the shorter one and its length
+		// Loop through all the elements in both lists
+		boolean firstShorter = listOne.size() < listTwo.size(); // figure out if the first list is shorter
+		int sizeOfShorter = 0;
+		
+		if (firstShorter)
+		{
+			sizeOfShorter = listOne.size();
+		}
+		else
+		{
+			sizeOfShorter = listTwo.size();
+		}
+		//sizeOfShorter contains number of elements in the shorter arraylist
+		
+		for (int i = 0; i < sizeOfShorter; i++)
+		{
+			newList.add(listOne.get(i));
+			newList.add(listTwo.get(i));
+		}
+		
+		//add the remaining elements from the longer list to the end of the new list
+		
+		//Start adding elements from the longer list from the element # that matches the length of the shorter 
+		if (firstShorter)
+		{
+			for(int i = sizeOfShorter; i < listTwo.size(); i++)
+			{
+				newList.add(listTwo.get(i));
+			}
+		}
+		else
+		{
+			for (int i = sizeOfShorter; i < listOne.size(); i++)
+			{
+				newList.add(listOne.get(i));
+			}
+		}
+		return newList;
 	}
 
 }
