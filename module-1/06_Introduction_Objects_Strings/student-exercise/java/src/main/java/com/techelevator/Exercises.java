@@ -255,11 +255,17 @@ public class Exercises {
 		int length = str.length(); // get length of string
 		int ind = index;
 		
-		if((index + 2) < (length ))
+		if(length < 3)
 		{
-			return str.substring(index, index + 2);
+			return str.substring(0);
 		}
-		else return str.substring(0, 2);
+		
+		if (index + 1 >= str.length() || index < 0)
+		{
+			return str.substring(0, 2);
+		}
+		
+		return str.substring(index, index + 2);
 		
 	}
 
@@ -286,8 +292,15 @@ public class Exercises {
 	 */
 	public boolean hasBad(String str) 
 	{
-		String bad = str.substring(0, 4);
-		return bad.contains("bad");
+		if (str.isEmpty())
+			return false;
+		
+		if (str.charAt(0) == 'b' || str.charAt(1) == 'b') 
+		{
+			return str.contains("bad");
+		}
+		
+		return false;
 	}
 
 	/*
@@ -424,31 +437,7 @@ public class Exercises {
 	 */
 	public int last2(String str) 
 	{
-		int length = str.length();
-		char previous = 'z';
-		boolean tooMany = false;
-		int count = 0;
-		
-		
-		for (int i = 0; i < length; i++)
-		{
-			if ((str.charAt(i) == previous) && (tooMany == true)) // if current character matches previous letter AND 
-			{
-				tooMany = false;
-			
-			}
-			else if ((str.charAt(i) == previous) && (tooMany == false))
-			{
-				tooMany = true;
-				count++;
-			}
-			else if ((str.charAt(i) != previous))
-			{
-				previous = str.charAt(i);
-			}
-			else;
-		}
-		return count;
+
 	}
 
 	/*
@@ -460,19 +449,18 @@ public class Exercises {
 	 */
 	public String stringX(String str) 
 	{
-		int length = str.length();
-		
-		if ((str.startsWith("x")) && (str.endsWith("x")))
-			{
-				return str.substring(1, length - 1);
-			}
-		else if (str.startsWith("x") ^ (str.endsWith("x")))
+	int length = str.length();
+	String keep = str.substring(1, length);
+	for (int i = 0; i < length; i++)
+	{
+		if (str.indexOf(i) == 'x')
 		{
-			return str.substring(1);
+			str.== "";
 		}
-		else;
-		
-		return str;
+	}
+
+	return str.charAt(0) + keep + str.charAt(length-1);
+	
 	}
 
 	/*
@@ -484,14 +472,13 @@ public class Exercises {
 	public String altPairs(String str) 
 	{
 		int length = str.length();
-		if (length < 7)
-			return str.substring(0, 2) + str.substring(4);
-		if (length <= 9)
-			return str.substring(0, 2) + str.substring(4,6) + str.substring(8);
-		if (length <= 12)
-			return str.substring(0,2) + str.substring(4,6) + str.substring(8,10);
-		
-		return str;
+		String keep = "";
+		for (int i = 0; i < length; i++)
+		{
+			keep = keep + str.charAt(i);
+			keep = keep + str.charAt(i+1);
+		}
+		return keep;
 	}
 
 	/*
