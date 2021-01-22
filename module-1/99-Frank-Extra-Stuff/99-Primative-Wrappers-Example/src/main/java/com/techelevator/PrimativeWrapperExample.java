@@ -20,7 +20,12 @@ public class PrimativeWrapperExample {
 		 *  float    - Float
 		 *  boolean  - Boolean
 		 *  char     - Character
+		 *  
+		 *  Integer.parseInt() - Use the Integer wrapper class method parseInt() method
+		 *  Double.parseDouble() - Use the Double wrapper class method parseDouble()
 		 */
+		
+		// valueOf() method is used to create a wrapper class object from a primitive value
 		Integer int1 = Integer.valueOf(6);      // Integer Object with the value 6
 		Integer int2 = Integer.valueOf(16);     // Integer Object with the value 16
 		Integer int3 = Integer.valueOf("61");   // Integer Object with the value 61 (automatic convert from String)

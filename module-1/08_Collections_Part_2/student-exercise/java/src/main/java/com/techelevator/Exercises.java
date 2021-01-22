@@ -33,8 +33,40 @@ public class Exercises {
 	 * animalGroupName("elephants") -> "unknown"
 	 *
 	 */
-	public String animalGroupName(String animalName) {
-		return null;
+	public String animalGroupName(String animalName) 
+	{
+		String groupName = ""; // hold the value that is returned
+		
+		if (animalName == null) // if animal name given is null
+			return "unknown";   // return unknown
+		// Set up a Map to associate the animal name to the group name
+		// key - animal name in lower (or it could be upper case too if you want) case since we want the search to be case insensitive
+		// value - group name
+		
+		Map<String, String> animalGroups = new HashMap(); // key - String. value - String
+		
+		//Add entries to the Map for the animal names given
+		
+		animalGroups.put("rhino", 		"Crash"); //Note the key is in lower case
+		animalGroups.put("giraffe", 	"Tower"); //Note the key is in lower case
+		animalGroups.put("elephant",	"Herd"); //Note the key is in lower case
+		animalGroups.put("lion", 		"Pride"); //Note the key is in lower case
+		animalGroups.put("crow", 		"Murder"); //Note the key is in lower case
+		animalGroups.put("pigeon", 		"kit"); //Note the key is in lower case
+		animalGroups.put("flamingo", 	"Pat"); //Note the key is in lower case
+		animalGroups.put("deer", 		"Herd"); //Note the key is in lower case
+		animalGroups.put("dog", 		"Pack"); //Note the key is in lower case
+		animalGroups.put("Crocodile",	"Float"); //Note the key is in lower case
+		
+		//Look to see if the animal name given is in the Map - case insensitivity
+		
+		groupName = animalGroups.get(animalName.toLowerCase()); // convert what is given to lowercase for the search
+		
+		// Check to be sure the animal was in the map. If not, set the group name to unknown
+		if (groupName == null)	// .get() returns null if the key is not in the Map
+			groupName = "unknown";
+				
+		return groupName;
 	}
 
 	/*
@@ -59,8 +91,26 @@ public class Exercises {
 	 * isItOnSale("dungeon9999") → 0.00
 	 *
 	 */
-	public double isItOnSale(String itemNumber) {
-		return -1.0;
+	//     return					takes
+	public double isItOnSale(String itemNumber) 
+	{
+		Map<String, Double> discount = new HashMap(); // creates key-value table
+		
+		if (itemNumber == null) //if given string is empty
+			return 0.00;		//return 0.00
+		
+		discount.put("KITCHEN4001"		, 0.20);
+		discount.put("GARAGE1070"		, 0.15);
+		discount.put("LIVINGROOM"		, 0.10);
+		discount.put("KITCHEN6073"		, 0.40);
+		discount.put("BEDROOM3434"		, 0.60);
+		discount.put("BATH0073"			, 0.15);
+		
+		if (discount.containsKey(itemNumber.toUpperCase()))
+			return discount.get(itemNumber.toUpperCase());
+		
+		return 0.00;
+		
 	}
 
 	/*
@@ -73,8 +123,19 @@ public class Exercises {
 	 * robPeterToPayPaul({"Peter": 2000, "Paul": 30000}) → {"Peter": 2000, "Paul": 30000}
 	 *
 	 */
-	public Map<String, Integer> robPeterToPayPaul(Map<String, Integer> peterPaul) {
-		return null;
+	public Map<String, Integer> robPeterToPayPaul(Map<String, Integer> peterPaul) 	
+	{
+		int petersMoney = peterPaul.get("Peter");
+		int paulsMoney = peterPaul.get("Paul");
+
+		if (petersMoney > 0 && paulsMoney < 1000) 
+		{
+		int moneyToPayPaul = petersMoney / 2;
+		peterPaul.put("Paul", moneyToPayPaul + paulsMoney);
+		peterPaul.put("Peter", petersMoney - moneyToPayPaul);
+		}
+
+		return peterPaul;
 	}
 
 	/*
@@ -86,8 +147,22 @@ public class Exercises {
 	 * peterPaulPartnership({"Peter": 3333, "Paul": 1234567890}) → {"Peter": 3333, "Paul": 1234567890}
 	 *
 	 */
-	public Map<String, Integer> peterPaulPartnership(Map<String, Integer> peterPaul) {
-		return null;
+	public Map<String, Integer> peterPaulPartnership(Map<String, Integer> peterPaul) 
+	{
+		int petersMoney = peterPaul.get("Peter");
+		int paulsMoney = peterPaul.get("Paul");
+
+		if (petersMoney >= 5000 && paulsMoney >= 10000) {
+		int paulsContribution = paulsMoney / 4;
+		int petersContribution = petersMoney / 4;
+
+		peterPaul.put("Paul", peterPaul.get("Paul") - paulsContribution);
+		peterPaul.put("Peter", peterPaul.get("Peter") - petersContribution);
+		peterPaul.put("PeterPaulPartnership", paulsContribution + petersContribution);
+
+		}
+
+		return peterPaul;
 	}
 
 	/*
@@ -98,8 +173,16 @@ public class Exercises {
 	 * beginningAndEnding(["man", "moon", "main"]) → {"m": "n"}
 	 * beginningAndEnding(["muddy", "good", "moat", "good", "night"]) → {"g": "d", "m": "t", "n": "t"}
 	 */
-	public Map<String, String> beginningAndEnding(String[] words) {
-		return null;
+	public Map<String, String> beginningAndEnding(String[] words) 
+	{
+		Map<String, String> firstAndLast = new HashMap();
+		
+		for (String strings : words)
+		{
+			firstAndLast.put(strings.substring(0,1), strings.substring(strings.length() - 1));
+		}
+		
+		return firstAndLast;  
 	}
 
 	/*
@@ -114,8 +197,25 @@ public class Exercises {
 	 * wordCount(["c", "b", "a"]) → {"b": 1, "c": 1, "a": 1}
 	 *
 	 */
-	public Map<String, Integer> wordCount(String[] words) {
-		return null;
+	// return Map<String, Integer>
+	public Map<String, Integer> wordCount(String[] words) 
+	{
+		Map<String, Integer> wordCount = new HashMap();
+		
+		for(String count : words)
+		{
+			String temp = count;
+			if(wordCount.containsKey(temp))
+			{
+				int num = wordCount.get(temp);
+				wordCount.put(temp,  num + 1);
+			}
+			else
+			{
+				wordCount.put(temp,  1);
+			}
+		}
+		return wordCount;
 	}
 
 	/*
@@ -129,8 +229,24 @@ public class Exercises {
 	 * intCount([]) → {}
 	 *
 	 */
-	public Map<Integer, Integer> integerCount(int[] ints) {
-		return null;
+	public Map<Integer, Integer> integerCount(int[] ints) 
+	{
+		Map<Integer, Integer> newMap = new HashMap();
+		
+		for (int i = 0; i < ints.length; i++) // loop through given array
+		{
+			int currentNum = ints[i];
+			
+			if(newMap.containsKey(currentNum))
+			{
+				int alreadyHas = newMap.get(currentNum);
+				alreadyHas++;
+			}
+			
+			else newMap.put(currentNum, 1);
+		}	
+		return newMap;
+
 	}
 
 	/*
