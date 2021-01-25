@@ -42,10 +42,10 @@ public class PlayingCard {
 	//********************************************************************************************
 	// Class member constants 
 	//********************************************************************************************
-	private final int MINVALUE    = 0;             // Minimum valid card value 
-	private final int MAXVALUE    = 13;            // Maximum valid card value
-	private final int JOKER_VALUE = 0;             // Joker value - No considered valid
-	private final int DEFAULT_VALUE = JOKER_VALUE; // Used if no value provided
+	private static final int MINVALUE    = 0;             // Minimum valid card value 
+	private static final int MAXVALUE    = 13;            // Maximum valid card value
+	private static final int JOKER_VALUE = 0;             // Joker value - No considered valid
+	private static final int DEFAULT_VALUE = JOKER_VALUE; // Used if no value provided
 		
 	//********************************************************************************************	
 	// Class member data - attributes of an class object
@@ -63,11 +63,14 @@ public class PlayingCard {
 //
 // Constructors are frequently overloaded (same name, same behavior,  different parameters)
 //              overloading ctors allows users flexibility in defining objects of the class
+//	
+// Provide constructors for each scenario you envision users to fill instantiate objects of the class
+	
 //*********************************************************************************************	
 	/**
 	 * default constructor - has no parameters
 	 */
-	public PlayingCard() {  
+	public PlayingCard() {  	  // Used when the user wants an object with default values
 		value   = DEFAULT_VALUE;
 		suit    = "Clubs";
 		showing = false;
@@ -77,6 +80,8 @@ public class PlayingCard {
 	/**
 	 * 4-arg constructor
 	 */
+	// Used when the user wants to create an object with specific attributes - value, suit, color, showing.
+	// All non-specified attributes are set to default values
 	public PlayingCard(int value, String suit, String color, boolean showing) {
 		setValue(value);          // Use member method to set value in case value passed is invalid
 		this.suit    = suit;
@@ -88,6 +93,8 @@ public class PlayingCard {
 	/**
 	 * 2-arg constructor
 	 */
+	// Used when the user wnats to create an object with specific attributes - value, suit
+	// All non-specified attributes will be set to default values
 		public PlayingCard(int value, String suit) {
 			setValue(value);          // Use member method to set value in case value passed is invalid
 			this.suit       = suit;
@@ -140,7 +147,14 @@ public class PlayingCard {
 	 * @param suit is the value to set PlayingCard suit attribute
 	 * @return void
 	 */
-	public void setSuit(String suit) {
+	// a method signature identifies the basic characteristics of a method
+	//					  characteristics of a method:
+	//													return-type of what it returns
+	//													name - used to invoke (run)the method
+	//													parameters it receives
+//  access return
+//  type   type     name   (parameters)
+	public void     setSuit(String suit) { // Hi, I'm setSuit and I return nothing and received a String I call suit.
 		this.suit = suit;
 	}
 	
@@ -236,6 +250,15 @@ public class PlayingCard {
 	public String toString() {
 		return "PlayingCard [suit=" + suit + ", value=" + value + ", color=" + color + ", showing=" + showing
 				            + "shape=" + shape +"]";
+	}
+	
+	//Need to override Object class .equals method since the Object class has no idea what it means
+	// for one playingcard class to be equal to another playingcard since WE defined playingcard class
+	
+	public boolean equals(PlayingCard otherCard) { // Since this is our class, we decide what makes a playing card equal to another playing card
+		if ((this.value == otherCard.value) && (this.suit.equals(otherCard.suit))) return true;
+		
+		return false;
 	}
 }
 
