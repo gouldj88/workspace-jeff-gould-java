@@ -10,6 +10,10 @@ import java.util.TreeMap;
 public class AmericanPlayingCard extends PlayingCard{
 	/************************************************************************************************
 	 * Constants for values related to American Playing Cards
+	 * 
+	 * Since constants cannot be changed, we make them:
+	 * Static - only one occurrence of the variable regardless of the number of objects defined
+	 * Final - cannot be changed once they are assigned a value
 	 ***********************************************************************************************/	
 	private static final int    DEFAULTCARDVALUE = 0;
 	private static final String DEFAULTCOLOR     = "BLACK";
@@ -26,8 +30,9 @@ public class AmericanPlayingCard extends PlayingCard{
 	
 	/***************************************************************************************************
 	 *Invoke method to populate maps with valid suits, colors & value names for American Playing Cards
+	 *when the first object of the class is instantiated
 	 **************************************************************************************************/	
-	
+	// Use an anonymous method (one without a name) to call/invoke the initializeMaps method.
 	static {             // static method to initialize maps before are ever used
        initializeMaps();
     }

@@ -18,12 +18,25 @@ public class UsePlayingCards {
 
 		System.out.println("\nComparing aUSACard2 and aUSACard3");
 		
+		aUSACard.setValue(4);
+		System.out.println("aUSACard2 is : \n + aUSACard3");
+		
+		System.out.println("aUSACard3 is: "  + aUSACard3.getValue());
+		
 		if (aUSACard2.equals(aUSACard3)) {
 			System.out.println("They are equal");
 		}
 		else {
 			System.out.println("They are NOT equal");
 		}
+		
+		ItalianCard guido = new ItalianCard(); // instantiate an ItalianCard
+		
+		System.out.println("Guido is: " + guido);
+		
+		guido.setValue(6);
+		
+		System.out.println("Guido is: " + guido);
 	}
 
 }

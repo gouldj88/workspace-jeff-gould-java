@@ -37,6 +37,13 @@ public class PlayingCard {
 				+ ", getColor()=" + getColor() + ", getSuit()=" + getSuit() + "]";
 	}
 	
+	public void showCard() {
+		System.out.println(this.toString()); 	// method required for Polymorphism even though we don't need it
+	} 											// because we don't intend to instantiate PlayingCard
+												// all the subclasses have their own showCard() method
+	
+								
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
