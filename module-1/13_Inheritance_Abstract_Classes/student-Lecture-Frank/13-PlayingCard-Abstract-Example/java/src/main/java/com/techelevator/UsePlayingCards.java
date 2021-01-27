@@ -30,17 +30,21 @@ public class UsePlayingCards {
 		SwissPlayingCard aSwissCard3 = new SwissPlayingCard(10, "ACORNS");
 		System.out.println("anSwissCard3 is : \n" + aSwissCard3);
 		
+		aSwissCard3.value = 11; // OK since value is defined as protected in the super class of SwissPlayingCard class
+		
 	System.out.println("\n----- Polymorphism example follows ------ \n");
 		
 		
-		List<PlayingCard> someCards = new ArrayList<PlayingCard>();
+		List<PlayingCard> someCards = new ArrayList<PlayingCard>(); // By using the superclass as type- put subclass object in it
+		// someCards is an object of type ArrayList of PlayingCard type objects - a subclass object includes super class type
+		// We use an abstract class as a type NOT to instantiate an object
 		
 		someCards.add(anItalianCard1);
 		someCards.add(aUSACard);
 		someCards.add(aSwissCard2);
 		
 		for(PlayingCard aCard : someCards) {
-			aCard.showCard();
+			aCard.showCard(); 
 		}
 			
 	}

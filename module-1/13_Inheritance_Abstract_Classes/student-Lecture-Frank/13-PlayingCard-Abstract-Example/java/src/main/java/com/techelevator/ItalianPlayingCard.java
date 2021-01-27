@@ -25,7 +25,7 @@ public class ItalianPlayingCard extends PlayingCard {
 		super(value, suit, suitMap.get(suit));{
 	
 		if (value > MAXVALUE) {
-			setValue(MAXVALUE);
+			this.value = MAXVALUE; // set the parameter called value to MAXVALUE
 		}
 		if (value < MINVALUE) {
 			setValue(MINVALUE);

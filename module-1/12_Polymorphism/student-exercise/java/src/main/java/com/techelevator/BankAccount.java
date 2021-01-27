@@ -1,5 +1,7 @@
 package com.techelevator;
 
+// a BankAccount is a type of Accountable class
+
 public class BankAccount implements Accountable{
 
     private String accountHolderName;
@@ -21,12 +23,12 @@ public class BankAccount implements Accountable{
     public String getAccountHolderName() {
         return accountHolderName;
     }
-
+     
     public String getAccountNumber() {
         return accountNumber;
     }
 
-    public int getBalance() {
+    public int getBalance() { // required by the Accountable interface
         return balance;
     }
 

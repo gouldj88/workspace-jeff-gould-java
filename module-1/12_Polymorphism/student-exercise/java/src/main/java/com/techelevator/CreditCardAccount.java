@@ -2,6 +2,8 @@ package com.techelevator;
 
 /**
  * CreditCardAccount
+ * 
+ * CreditCard is a type of Accountable class
  */
 public class CreditCardAccount implements Accountable {
 	
