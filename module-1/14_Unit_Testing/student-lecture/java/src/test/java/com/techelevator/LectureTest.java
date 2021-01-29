@@ -17,23 +17,23 @@ import org.junit.runners.MethodSorters;
  * production class with "Test" at the end.  For example, the test class
  * for the production class "Foo" would be "FooTest"
  */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class LectureTest {
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)	// Optional - tells JUnit to list tests alphabetically
+public class LectureTest {		// Class to hold all the unit tests
 
 	/* If a method is annotated with @Before, it will be executed immediately prior to every test.
 	 * It is intended to be used when there is a repetitive setup (i.e. "Arrange") task that is
 	 * performed by several tests */
-	@Before
-	public void setup() {
-		System.out.println("setup");
+	@Before	// Do this before every unit test (any setup required for each test; define and initialize variables, gather data from outside sources...)
+	public void setup() {	// Method name doesn't matter as long as its descriptive
+		System.out.println("setup");	// Not usually done. This is here for illustration purposes
 	}
 
 	/* If a method is annotated with @After, it will be executed immediately after every test.
 	 * It is intended to be used when there is a repetitive cleanup task that is performed by
 	 * several tests (e.g. deleting temp files, rolling back database transactions, etc) */
-	@After
-	public void teardown() {
-		System.out.println("teardown");
+	@After	// Do this after every test - any take down processing after each test
+	public void teardown() { // Method name doesn't matter as long as its descriptive
+		System.out.println("teardown");	// Not usually done. This is here for illustration purposes
 	}
 
 	/* Each test is implemented as a method with the @Test annotation. When the JUnit
@@ -57,16 +57,18 @@ public class LectureTest {
 	 *     - return void
 	 *     - take no arguments
 	 */
-	@Test
+	@Test	// Identifies unit test to JUnit - If omitted, JUnit doesn't see the test
 	public void length_returns_the_number_of_characters_in_a_String() {
 		System.out.println("length_returns_the_number_of_characters_in_a_String"); // FOR DEMONSTRATION PURPOSES ONLY, don't do this in your own tests
 
 		/* The assertEquals method validates that two values are equal and
 		 * fails the test if they are not equal */
 
-		String theString = "Java"; // Arrange
-		int length = theString.length(); // Act
-		Assert.assertEquals(4, length); // Assert
+		String theString = "Java"; // Arrange = setup/define/initialize the data
+		int length = theString.length(); // Act - perform the process you want to test using the test data you arranged
+		//	Assert that the value in length equals 4 - will issue a default error message because we didn't give it one
+		//	assertEquals(expected value, result)
+		Assert.assertEquals(4, length); // Assert - check to see if the process did what you expected
 	}
 
 	@Test
@@ -76,8 +78,8 @@ public class LectureTest {
 		/* The assertTrue method validates that the boolean value provided as an arugment
 		 * is true and fails the test if it is false. */
 
-		String theString = "Hello World!"; // Arrange
-		boolean startsWithHello = theString.startsWith("Hello"); // Act
+		String theString = "Hello World!"; // Arrange - set up the test data
+		boolean startsWithHello = theString.startsWith("Hello"); // Act - perform the process to start
 
 		/* every assert method allows the first parameter to be a String that contains a message
 		 * that should be displayed when the assertion fails

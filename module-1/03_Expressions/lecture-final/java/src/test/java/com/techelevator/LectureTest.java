@@ -9,16 +9,22 @@ import static org.junit.Assert.*;
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class LectureTest {
-
-    private Lecture exercises = new Lecture();
+	// Instantiate the lecture code
+    private Lecture exercises = new Lecture(); // Define an object containing the methods to be tested
 
     @Test
-    public void testReturnNotOne() {
+    public void testReturnNotOne() {	// Testing the returnNotOne() method in the lecture code
+    	//				message-if-test-fails		expected  method-to-test
         assertNotEquals("Value returned shouldn't be one", 1, exercises.returnNotOne());
+        // Check to see if the value returned from the returnNotOne() method is Not Equal
     }
 
     @Test
-    public void testReturnNotHalf() {
+    public void testReturnNotHalf() {	// Testing the returnNotHalf() method in the lecture code
+    	// When checking double values for equals/not equals, a fudge-factor is specified due to the imprecision of doubles
+    	//															.44999999999 instead of .45
+    	//					fudge-factor - consider the double values equal if the difference is no more than the fudge-factor
+    	//				message-if-test-fails		  expected  method-to-test			   fudge-factor
         assertNotEquals("Value returned shouldn't be 0.5", 0.5, exercises.returnNotHalf(), 0.001);
     }
 
