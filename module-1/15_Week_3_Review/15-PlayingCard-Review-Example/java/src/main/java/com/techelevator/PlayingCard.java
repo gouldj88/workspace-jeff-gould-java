@@ -14,8 +14,9 @@ public class PlayingCard {
 	 * 
 	 * enum - define a set of constant values that may be referenced as a data type
 	 ***************************************************************************************************/
-	public static enum CardColor {          
-		BLACK, RED                         
+//  access        type name
+	public static enum CardColor {   	// Define a set of words that are valid for enum type
+		BLACK, RED                     //  Only values allowed for the enum type CardColor
 	};
 
 	public static enum CardSuit {          // public is OK since they are constants and cannot be changed
@@ -95,9 +96,24 @@ public class PlayingCard {
 	 * setter methods
 	 ***************************************************************************************************/
 	public CardValue setValue(int ivalue) {  // Set the CardValue based on an int value
-		switch (ivalue) {
-		case 1:
-			return CardValue.ONE;
+		// A switch is an alternative to a series of if/else statements
+		// Each case statement is evaluated one at a time until a case is true
+		//
+		// When a case is true, the statement following the case AND ALL STATEMENTS UNTIL THE END OF THE SWITCH will execute
+		//			unless the case contains a return - ends the method - or break - breaks out of the switch
+		//
+		// The following code written as a series of if/elses:
+		//
+		// if (ivalue = 1) {
+		//		return CardValue.ONE
+		// 	}
+		// else if (ivalue = 2) {
+		//		return CardValue.TWO
+		//	}
+		
+		switch (ivalue) {			// if (ivalue...)			
+		case 1:						// equals 1
+			return CardValue.ONE;	// return 1
 		case 2:
 			return CardValue.TWO;
 		case 3:
@@ -129,15 +145,15 @@ public class PlayingCard {
 
 	private void setColor(CardSuit suit) {  // Set the color based on the suit of the object
 		switch (suit) {
-		case SPADE:
+		case SPADE:		// stack cases to simulate an OR condition
 		case CLUB:
 			this.color = CardColor.BLACK;
-			break;
+			break;		// required to skip the rest of the statements in the switch and resume an 
 		case DIAMOND:
 		case HEART:
 			this.color = CardColor.RED;
 			break;
-		default:
+		default:		// Done if no cases are true
 			this.color = DEFAULTCOLOR;
 		}
 	}
@@ -158,7 +174,7 @@ public class PlayingCard {
 		StringBuffer stringCard = new StringBuffer();  // Define an object to hold String version of object
 
 		int firstColumnSize = 16;                      // position of first tab position of screen line 
-
+// In StringBuffer, use .append() rather than "+" to concatenate a String
 		stringCard.append("Value: " + value);          // Add literal to StringBuffer
 		stringCard.append(" (" + getIntValue() + ")"); // Add integer value of CardValue to StringBuffer
 		if (stringCard.length() < firstColumnSize) {   // If current StringBuffer size less than first tab position
@@ -190,7 +206,7 @@ public boolean equals(Object otherObject) {   // Compare two PlayingCards for eq
 	public int hashCode() {      // Generate hashCode for object if Java needs one e.g. for a HashMap
 	                             // HashCode is a unique value representing an instance of an object
 		int hashValue = 17;      // A prime number used in calculating the HashCode
-		int primeMultipler = 59; // A prime numbet used in calculating the HashCode
+		int primeMultipler = 59; // A prime number used in calculating the HashCode
 
 		hashValue = hashValue * primeMultipler + value.ordinal();  // Same values used in equals() 
 		hashValue = hashValue * primeMultipler + suit.ordinal();   //     should be used in the 
