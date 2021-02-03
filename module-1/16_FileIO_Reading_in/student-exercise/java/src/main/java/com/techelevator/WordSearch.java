@@ -16,9 +16,9 @@ public class WordSearch {
 		
 		int lineNumber = 0;
 		
-		String userInput;
+
 		System.out.println("What is the word you are looking for?");
-		userInput = keyboard.nextLine();
+		String userInput = keyboard.nextLine();
 		
 		System.out.println("Should the search be case sensitive? (Y/N)");
 		String caseSens = keyboard.nextLine();
@@ -26,8 +26,7 @@ public class WordSearch {
 		
 		while(readFile.hasNext()) {
 			lineNumber++;
-			String currentLine;
-			currentLine = readFile.nextLine();
+			String currentLine = readFile.nextLine();
 			if(caseSens.equals("Y") && currentLine.contains(userInput)) {
 				System.out.println(lineNumber + ": " + currentLine);
 			}
