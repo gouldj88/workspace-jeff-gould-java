@@ -23,6 +23,9 @@
 --
 -- minimum # conditions on WHERE = # tables - 1
 --
+--
+-- Modern syntax, you CANNOT forget the join condition - it is coded in the ON clause
+--
 --  SELECT columns
 --    FROM table1
 --         INNER JOIN
@@ -75,6 +78,23 @@
 -- ********* INNER JOIN ***********
 
 -- Show the last_name of all the actors in the movie FINDING ANACONDA
+
+-- last_name is in the actor table
+-- file title is in the file table
+-- no direct link between actor and film
+-- so we used the indirect link that film_actor provided
+
+select last_name -- columns in the result
+  from actor
+       inner join
+       film_actor
+    on actor.actor_id = film_actor.actor_id
+       inner join
+       film
+    on film_actor.film_id = film.film_id
+ where title = 'FINDING ANACONDA'
+ ;
+
 
 -- Let's find out who made payment 16666:
 
