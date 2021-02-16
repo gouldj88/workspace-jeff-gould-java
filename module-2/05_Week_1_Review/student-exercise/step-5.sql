@@ -9,12 +9,28 @@
   description: Ohiopyle State Park is a Pennsylvania state park on 19,052 acres in Dunbar, Henry Clay and Stewart Townships, Fayette County, Pennsylvania in the United States. The focal point of the park is the more than 14 miles of the Youghiogheny River Gorge that passes through the park.
   ------------------------------
 */
+begin transaction;
+insert into park (name, location, establish_date, area, visitors, description)
+values ('Ohiopyle State Park', 'Pennsylvania', '1065-01-01', 19052, 1000000, 'Ohiopyle State Park is a Pennsylvania state park on 19,052 acres in Dunbar, Henry Clay and Stewart Townships, Fayette County, Pennsylvania in the United States. The focal point of the park is the more than 14 miles of the Youghiogheny River Gorge that passes through the park.')
+;
 
+select *
+from park
+;
 
-/*
-  STEP TWO: You just found out that there was an error with the park data. Please update the park visitors to 1.5 million anually.
+rollback;
 
-*/
+-- STEP TWO: You just found out that there was an error with the park data. Please update the park visitors to 1.5 million anually.
+begin transaction;
+update park
+SET visitors = 1500000, park_id = 4
+where name = 'Ohiopyle State Park'
+;
+
+select *
+from park
+;
+
 
 
 /*
@@ -27,7 +43,14 @@
   daily_fee: 95.00
   ------------------------------------------------------------
 */
+begin transaction;
+insert into campground (park_id, name, open_from_mm, open_to_mm, daily_fee)
+values(4, 'Youghiogheny', '01', '12', '95');
 
+select *
+from campground;
+
+rollback;
 
 /*
  STEP FOUR: Insert 3 new sites with the following data:

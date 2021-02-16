@@ -134,31 +134,97 @@ select * from countrylanguage where countrycode = (select code from country wher
 rollback;
 
 -- 2. Delete all occurrences of the Klingon language 
-
+begin transaction;
+delete from countrylanguage where language = 'Klingon';
+rollback;
 
 -- REFERENTIAL INTEGRITY
 
 -- 1. Try just adding Elvish to the country language table.
+-- In order to add language, we need to know the country, isofficial, and percentage, because they are all required (not nullable)
+-- We can't just add a language without everything else
+/*begin transaction;
+insert into countrylanguage
+(countrycode, language, isofficial, percentage)
+values(???, 'Elvish', ???, ???)
+rollback;*/
 
 -- 2. Try inserting English as a spoken language in the country ZZZ. What happens?
+--
+-- Countrylanguage table is a dependent of country(parent) 
+--       It's foreign key must match a primary key value that already exists in the country table
+--         countrycode value in countrylanguage must match an existing code value in country
+-- When we try to insert a language for our countrycode that is NOT in the country table,
+--       we get a foreign key violation error
+--
+-- Be sure that any value you specify as a foreign key value has a match to a primary key in the parent
+--
+-- Either look at the parent table or insert parent rows before dependent rows
+-- 
+-- In this case, if the country code was for a country that did not exist in country, we have to add the country first
+--
+begin transaction;
+-- This insert will fail because countrycode 'ZZ' is not an existing primary key value in the country table
+insert into countrylanguage
+(countrycode, language, isofficial, percentage)
+values('ZZZ', 'English', false, 10)
+;
+select * from countrylanguage where language = 'English';
+rollback;
 
 -- 3. Try deleting the country USA. What happens?
 
+-- The country table has two dependents: city and countrylanguage
 
+-- When deleting a row from a parent table, it may be restricted
+-- so that the row may only be deleted if it has no dependent rows
+-- (i.e. no foreign key matches to the primary key)
+
+
+-- You must delete all dependent rows before parents if deletion of parent rows is restricted
+
+begin transaction;
+delete from country where code = 'USA';
+rollback;
+
+-- this delete will fail if there are any entries in the dependent table with a countrycode of 'USA'
+-- (this is why #8 in the exercise should fail)
 -- CONSTRAINTS
 
 -- 1. Try inserting English as a spoken language in the USA
+begin transaction;
+
+-- This fails with a unique violation due to there already being an entry for 'USA' and 'English' in the countrylanguage table
+
+insert into countrylanguage
+(countrycode, language, isofficial, percentage)
+values('USA', 'English', false, 90)
+;
+
+rollback;
 
 -- 2. Try again. What happens?
 
 -- 3. Let's relocate the USA to the continent - 'Outer Space'
+begin transaction;
+
+-- THis update will fail due to 'Outer Space' not being an allowable continent value
+-- There is a CHECK constraint on continent that limits the values
+update country
+   set continent = 'Outer Space'
+ where code = 'USA'
+ ;
+
+rollback;
 
 
--- How to view all of the constraints
+-- Constraints are stored in database tables - postgreSQL tables
+--
+-- How to view all of the constraints on all tables
 
-SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
-SELECT * FROM INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE
-SELECT * FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS
+SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS;
+SELECT * FROM INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE;
+SELECT * FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS;
 
 
 -- TRANSACTIONS

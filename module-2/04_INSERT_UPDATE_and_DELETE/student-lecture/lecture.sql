@@ -20,6 +20,7 @@
 --  DEFAULT - Specify a default value for column if no value is supplied on INSER
 ---------------------------------------------------------------------------------------------------------------------------------------
 -- Unit Of Work (UOW) - A recoverable sequence of operations within an application process
+--                      all steps to have completed pieces of work have been completed
 -- 
 -- BEGIN TRANSACTION - Mark the start of a unit of work
 -- 
@@ -58,19 +59,92 @@
 
 -- 1. Add Klingon as a spoken language in the USA
 
+--delete from countrylanguage where language = 'Klingon';
+
+Begin transaction;   -- start a unit of work - in case something goes wrong, we undo/roll back and start over
+
+-- The safest way (fewer opportunities for errors) is to inclue the column list in the INSERT
+
+insert into countrylanguage                          -- add a row to the country language table
+(countrycode, language, isofficial, percentage)      -- list of columns we are providing values for - all the non-null columns
+values('USA', 'Klingon', true, 16)                   -- values for the columns in the order of the list above
+;
+
+--insert into countrylanguage                          -- add a row to the country language table
+--(language, countrycode, isofficial, percentage)      -- list of columns we are providing values for - all the non-null columns
+--values('Klingon', 'USA', true, 16)                   -- values for the columns in the order of the list above
+--;
+
+-- into countrylanguage                          -- add a row to the country language table
+--values('USA', 'Klingon', true, 16)                   -- values for the columns in the order of definition for the table
+--;
+-- Optionally, we can do a select to make sure the insert worked
+-- Since we are doing a rollback, we cannot look at the table after we run to see if the insert worked
+select * 
+ from countrylanguage
+where countrycode = 'USA'
+;
+
+Rollback;  -- undo the changes in this unit of work until we are sure that they are done correctly
 -- 2. Add Klingon as a spoken language in Great Britain
 
+Begin transaction;
+insert into countrylanguage
+(countrycode, language, isofficial, percentage)      -- list of columns we are providing values for - all the non-null columns
+values('GBR', 'Klingon', true, 36)                   -- values for the columns in the order of the list above
+;
+
+select * 
+ from countrylanguage
+where language = 'Klingon'
+;
+rollback;
 
 -- UPDATE
 
--- 1. Update the capital of the USA to Houston
+-- 1. Update the capital of the US  A to Houston
+begin transaction;
 
+update country
+   set capital = (select id from city where name = 'Houston') -- look up the ID for Houston in the city table and use it to set the capital
+ where code = 'USA'  -- limit the update to just rows with the countrycode USA
+;
+
+select *
+from country
+where code = 'USA'
+;
+
+rollback;
 -- 2. Update the capital of the USA to Washington DC and the head of state
 
+begin transaction;
+
+update country
+   set capital = (select id from city where name = 'Washington'), -- code a comma when there is another column to be updated
+       headofstate = 'Luke'                                       -- just code column-name = new-value -- do not repeat the set
+ where code = 'USA'
+            ;
+select * from country where code = 'USA'
+;
+rollback;
 
 -- DELETE
 
 -- 1. Delete English as a spoken language in the USA
+begin transaction;
+
+delete from countrylanguage
+where countrycode = (select code from country where name = 'United States')
+and language = 'English'
+;
+
+select *
+from countrylanguage
+where countrycode = (select code from country where name = 'United States')
+;
+
+rollback;
 
 -- 2. Delete all occurrences of the Klingon language 
 
