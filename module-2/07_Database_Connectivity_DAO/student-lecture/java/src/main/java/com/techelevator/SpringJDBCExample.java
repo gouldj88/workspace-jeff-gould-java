@@ -1,5 +1,7 @@
 package com.techelevator;
 
+// This is the application program to use our DAOs to access a database
+
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;

@@ -98,7 +98,7 @@ public class ProjectsCLI {
  *  We provide it for you this time so you can focus on the POJOs and DAO implementations	
  ******************************************************************************************/
 		BasicDataSource dataSource = new BasicDataSource();             // Define and instantiate a data source
-		dataSource.setUrl("jdbc:postgresql://localhost:5432/projectsDAO"); // Set the connection string for the data source
+		dataSource.setUrl("jdbc:postgresql://localhost:5432/projectDAO"); // Set the connection string for the data source
 		dataSource.setUsername("postgres");                             // Set the user name that owns the database
 		dataSource.setPassword("postgres1");                            // Set the password for the owner of the database
 
@@ -153,9 +153,9 @@ public class ProjectsCLI {
 		printHeading("Add New Department");
 		String newDepartmentName = getUserInput("Enter new Department name");
 		Department newDepartment = new Department();
-//		newDepartment.setName(newDepartmentName);  // If your setter is not called "setName()", change this to what yours is called
+		newDepartment.setName(newDepartmentName);  // If your setter is not called "setName()", change this to what yours is called
 		newDepartment = departmentDAO.createDepartment(newDepartment);     // Use the DAO object to run DAO method
-//		System.out.println("\n*** "+newDepartment.getName()+" created ***");  // If your getter are not called "getName()", change this to what yours is called
+		System.out.println("\n*** "+newDepartment.getName()+" created ***");  // If your getter are not called "getName()", change this to what yours is called
 	}
 	
 	private void handleUpdateDepartmentName() {
@@ -165,7 +165,7 @@ public class ProjectsCLI {
 			System.out.println("\n*** Choose a Department ***");
 			Department selectedDepartment = (Department)menu.getChoiceFromOptions(allDepartments.toArray());
 			String newDepartmentName = getUserInput("Enter new Department name");
-//			selectedDepartment.setName(newDepartmentName);     // If your setter is not called "setName()", change this to what yours is called
+			selectedDepartment.setName(newDepartmentName);     // If your setter is not called "setName()", change this to what yours is called
 			departmentDAO.saveDepartment(selectedDepartment);  // Use the DAO object to run DAO method
 		} else {
 			System.out.println("\n*** No results ***");
@@ -191,8 +191,8 @@ public class ProjectsCLI {
 		if(allDepartments.size() > 0) {
 			System.out.println("\n*** Choose a Department ***");
 			Department selectedDepartment = (Department)menu.getChoiceFromOptions(allDepartments.toArray());
-//			List<Employee> departmentEmployees = employeeDAO.getEmployeesByDepartmentId(selectedDepartment.getId());  // If your getter is not called "getId()", change this to what yours is called
-//			listEmployees(departmentEmployees);
+			List<Employee> departmentEmployees = employeeDAO.getEmployeesByDepartmentId(selectedDepartment.getDepartmentId());  // If your getter is not called "getId()", change this to what yours is called
+			listEmployees(departmentEmployees);
 		} else {
 			System.out.println("\n*** No results ***");
 		}
@@ -202,7 +202,7 @@ public class ProjectsCLI {
 		System.out.println();
 		if(departments.size() > 0) {
 			for(Department dept : departments) {
-//				System.out.println(dept.getName()); // If your getter is not called "getName()", change this to what yours is called
+				System.out.println(dept.getName()); // If your getter is not called "getName()", change this to what yours is called
 			}
 		} else {
 			System.out.println("\n*** No results ***");
@@ -247,7 +247,7 @@ public class ProjectsCLI {
 		System.out.println();
 		if(employees.size() > 0) {
 			for(Employee emp : employees) {
-//				System.out.println(emp.getLastName() + ", " + emp.getFirstName()); // If your getters are not called "getLastName()" and "getFirstName(), change this to what yours is called
+				System.out.println(emp.getLastName() + ", " + emp.getFirstName()); // If your getters are not called "getLastName()" and "getFirstName(), change this to what yours is called
 			}
 		} else {
 			System.out.println("\n*** No results ***");
@@ -265,7 +265,7 @@ public class ProjectsCLI {
 		List<Department> allDepartments = departmentDAO.getAllDepartments();  // Use the DAO object to run DAO method
 		Department selectedDepartment = (Department)menu.getChoiceFromOptions(allDepartments.toArray());
 		
-//		employeeDAO.changeEmployeeDepartment(selectedEmployee.getId(), selectedDepartment.getId());  // If your getters are not called "getId()", change this to what yours is called
+		employeeDAO.changeEmployeeDepartment(selectedEmployee.getEmployeeId(), selectedDepartment.getDepartmentId());  // If your getters are not called "getId()", change this to what yours is called
 	}
 
 	private void handleProjects() {
@@ -294,14 +294,14 @@ public class ProjectsCLI {
 		Project selectedProject = getProjectSelectionFromUser();
 		
 		System.out.println("Choose an employee to remove:");
-//		List<Employee> projectEmployees = employeeDAO.getEmployeesByProjectId(selectedProject.getId());  // If your getter is not called "getId()", change this to what yours is called
-//		if(projectEmployees.size() > 0) {
-//			Employee selectedEmployee = (Employee)menu.getChoiceFromOptions(projectEmployees.toArray());
-//			projectDAO.removeEmployeeFromProject(selectedProject.getId(), selectedEmployee.getId()); // If your getters are not called "getId()", change this to what yours is called
-//			System.out.println("\n*** "+selectedEmployee+" removed from "+selectedProject+" ***");
-//		} else {
-//			System.out.println("\n*** No results ***");
-//		}
+		List<Employee> projectEmployees = employeeDAO.getEmployeesByProjectId(selectedProject.getProjectId());  // If your getter is not called "getId()", change this to what yours is called
+		if(projectEmployees.size() > 0) {
+			Employee selectedEmployee = (Employee)menu.getChoiceFromOptions(projectEmployees.toArray());
+			projectDAO.removeEmployeeFromProject(selectedProject.getProjectId(), selectedEmployee.getEmployeeId()); // If your getters are not called "getId()", change this to what yours is called
+			System.out.println("\n*** "+selectedEmployee+" removed from "+selectedProject+" ***");
+		} else {
+			System.out.println("\n*** No results ***");
+		}
 	}
 
 	private void handleEmployeeProjectAssignment() {
@@ -313,14 +313,14 @@ public class ProjectsCLI {
 		List<Employee> allEmployees = employeeDAO.getAllEmployees();   // Use the DAO object to run DAO method
 		Employee selectedEmployee = (Employee)menu.getChoiceFromOptions(allEmployees.toArray());
 		
-//		projectDAO.addEmployeeToProject(selectedProject.getId(), selectedEmployee.getId());  // If your getters are not called "getId()", change this to what yours is called
+		projectDAO.addEmployeeToProject(selectedProject.getProjectId(), selectedEmployee.getEmployeeId());  // If your getters are not called "getId()", change this to what yours is called
 		System.out.println("\n*** "+selectedEmployee+" added to "+selectedProject+" ***");
 	}
 	
 	private void handleProjectEmployeeList() {
 		Project selectedProject = getProjectSelectionFromUser();
-//		List<Employee> projectEmployees = employeeDAO.getEmployeesByProjectId(selectedProject.getId());  // If your getters are not called "getId()", change this to what yours is called
-//		listEmployees(projectEmployees);
+		List<Employee> projectEmployees = employeeDAO.getEmployeesByProjectId(selectedProject.getProjectId());  // If your getters are not called "getId()", change this to what yours is called
+		listEmployees(projectEmployees);
 	}
 
 	private Project getProjectSelectionFromUser() {
@@ -333,7 +333,7 @@ public class ProjectsCLI {
 		System.out.println();
 		if(projects.size() > 0) {
 			for(Project proj : projects) {
-//				System.out.println(proj.getName());   // If your getter are not called "getName()", change this to what yours is called
+				System.out.println(proj.getName());   // If your getter are not called "getName()", change this to what yours is called
 			}
 		} else {
 			System.out.println("\n*** No results ***");

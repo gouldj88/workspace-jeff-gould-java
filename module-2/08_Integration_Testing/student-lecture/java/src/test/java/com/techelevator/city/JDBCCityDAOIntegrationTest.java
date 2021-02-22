@@ -1,5 +1,19 @@
 package com.techelevator.city;
 
+/*
+ * Integration Testing - Testing to ensure your code interacts with external processes correctly
+ * 
+ * You want to be sure that your code doesn't break when working external code
+ * 
+ * Unit Testing - ensures that your class methods work as intended within the context of the application program
+ * 
+ * When using DAOs, we are interacting with an external resource or process called a data base manager
+ * 
+ * We need to verify that any INSERT, UPDATE, or DELETE we do was done correctly in the data base manager
+ * 
+ * We will use JUnit with some additional techniques and methods
+ */
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
