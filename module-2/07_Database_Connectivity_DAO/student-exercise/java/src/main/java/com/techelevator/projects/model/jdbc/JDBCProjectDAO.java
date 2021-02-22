@@ -21,6 +21,7 @@ public class JDBCProjectDAO implements ProjectDAO {
 	
 	@Override
 	public List<Project> getAllActiveProjects() {
+		
 		List<Project> listOfProjects = new ArrayList<Project>();
 		
 		String sqlGetAllActiveProjects = "select project_id, name, from_date, to_date " +

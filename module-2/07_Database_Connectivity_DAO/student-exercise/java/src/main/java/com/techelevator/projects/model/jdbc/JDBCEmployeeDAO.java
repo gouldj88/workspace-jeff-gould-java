@@ -8,7 +8,6 @@ import javax.sql.DataSource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 
-import com.techelevator.projects.model.Department;
 import com.techelevator.projects.model.Employee;
 import com.techelevator.projects.model.EmployeeDAO;
 
@@ -42,34 +41,24 @@ public class JDBCEmployeeDAO implements EmployeeDAO {
 	@Override
 	public List<Employee> searchEmployeesByName(String firstNameSearch, String lastNameSearch) {
 		
-		ArrayList<Employee> listOfEmployees = new ArrayList<Employee>();
+		List<Employee> listOfEmployees = new ArrayList<Employee>();
 		
-		String firstNameAdapted;
-		String lastNameAdapted;
+		Employee anEmployee = null;
 		
-		if(firstNameSearch.equals("")) {
-			firstNameAdapted = "";
-		} else {
-			firstNameAdapted = ("%" + firstNameSearch + "%");
-		}
+		String sqlEmployeeSearchByName = "SELECT employee_id, department_id, first_name, last_name, birth_date, gender, hire_date " +
+										 "FROM Employee " +
+										 "WHERE first_name ILIKE '%" + firstNameSearch + "%' " +
+										 "AND last_name ILIKE '%" + lastNameSearch + "%'";
 		
-		if (lastNameSearch.equals("")) {
-			lastNameAdapted = "";
-			
-		} else {
-			lastNameAdapted = ("%" + lastNameSearch + "%");
-		}
+		SqlRowSet returnedEmployee = jdbcTemplate.queryForRowSet(sqlEmployeeSearchByName);
 		
-		String searchAllEmployeesSQL = ("select last_name, first_name, employee_id from employee where upper(first_name) like upper('"+firstNameAdapted+"') or upper(last_name) like upper('"+lastNameAdapted+"') order by last_name");
-
-		SqlRowSet theEmployees = jdbcTemplate.queryForRowSet(searchAllEmployeesSQL);
-		
-		while(theEmployees.next()) {
-			Employee anEmployee = MapRowToEmployee(theEmployees);
-			listOfEmployees.add(anEmployee);
+		if(returnedEmployee.next()) {
+			anEmployee = MapRowToEmployee(returnedEmployee);
+			listOfEmployees.add(anEmployee);	
 		}
 		
 		return listOfEmployees;
+
 	}
 
 	@Override
@@ -83,11 +72,9 @@ public class JDBCEmployeeDAO implements EmployeeDAO {
 		
 		SqlRowSet returnedListOfEmployees = jdbcTemplate.queryForRowSet(sqlGetEmployeesById, id);
 		
-		if(returnedListOfEmployees.next()) {
+		while(returnedListOfEmployees.next()) {
 			anEmployee = MapRowToEmployee(returnedListOfEmployees);
 			listOfEmployees.add(anEmployee);
-		} else { 
-			throw new RuntimeException("Something went wrong");
 		}
 		
 		return listOfEmployees;
@@ -100,7 +87,7 @@ public class JDBCEmployeeDAO implements EmployeeDAO {
 		
 		Employee anEmployee = null;
 		
-		String sqlGetListOfEmployees = "SELECT employee_id, department_id, first_name, last_name, birth_date, gender, hire_date FROM employee " +
+		String sqlGetListOfEmployees = "SELECT employee.employee_id, department_id, first_name, last_name, birth_date, gender, hire_date FROM employee " +
 				                       "left join project_employee " +
 				                       "on employee.employee_id = project_employee.employee_id " +
 				                       "where project_employee.employee_id is null";
@@ -125,7 +112,7 @@ public class JDBCEmployeeDAO implements EmployeeDAO {
 		String sqlGetListOfEmployees = "SELECT employee.employee_id, employee.department_id, employee.first_name, employee.last_name, employee.birth_date, employee.gender, employee.hire_date " +
 		                               "FROM employee " +
 				                       "inner join project_employee " +
-				                       "on employee.department_id = project_employee.employee_id " +
+				                       "on employee.employee_id = project_employee.employee_id " +
 				                       "inner join project " +
 				                       "on project_employee.project_id = project.project_id " +
 				                       "where project.project_id = ?";

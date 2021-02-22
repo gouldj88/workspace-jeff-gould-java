@@ -48,9 +48,9 @@ public class JDBCDepartmentDAO implements DepartmentDAO {
 		
 		Department aDepartment = null;
 		
-		String departmentNameSql = "SELECT department_id, name FROM department where name = ?";
+		String departmentNameSql = "SELECT department_id, name FROM department where name ILIKE '%" + nameSearch + "%'";
 		
-		SqlRowSet departmentNames = jdbcTemplate.queryForRowSet(departmentNameSql, nameSearch);
+		SqlRowSet departmentNames = jdbcTemplate.queryForRowSet(departmentNameSql);
 		
 		if(departmentNames.next()) {
 			aDepartment = MapRowToDepartment(departmentNames);
