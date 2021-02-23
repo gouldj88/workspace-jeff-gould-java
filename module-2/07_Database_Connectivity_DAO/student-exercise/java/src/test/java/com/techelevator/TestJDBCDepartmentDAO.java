@@ -53,7 +53,7 @@ public class TestJDBCDepartmentDAO {
 	public void testGetAllDepartments() {
 		List<Department> results = dao.getAllDepartments();
 		assertNotNull(results);
-		assertEquals(6, results.size());
+		assertEquals(5, results.size());
 	}
 	
 	@Test 

@@ -77,7 +77,7 @@ public class TestJDBCEmployeeDAO {
 	public void testGetEmployeesWithoutProject() {
 		List<Employee> results = dao.getEmployeesWithoutProjects();
 		Assert.assertNotNull(results);
-		Assert.assertEquals(2, results.size());
+		Assert.assertEquals(3, results.size());
 	}
 	
 	@Test
@@ -91,7 +91,7 @@ public class TestJDBCEmployeeDAO {
 	public void testGetEmployeesByProjectId() {
 		List<Employee> results = dao.getEmployeesByProjectId(daoProject.getAllActiveProjects().get(0).getProjectId());
 		Assert.assertNotNull(results);
-		Assert.assertEquals(5, results.size());
+		Assert.assertEquals(3, results.size());
 	}
 	
 	@Test

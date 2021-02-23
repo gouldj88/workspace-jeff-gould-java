@@ -60,7 +60,7 @@ public class TestJDBCProjectDAO {
 	public void testGetAllActiveProjects() {
 		List<Project> results = dao.getAllActiveProjects();
 		Assert.assertNotNull(results);
-		Assert.assertEquals(3, results.size());
+		Assert.assertEquals(1, results.size());
 		Assert.assertEquals("The Never-ending Project", results.get(0).getName());
 	}
 	
