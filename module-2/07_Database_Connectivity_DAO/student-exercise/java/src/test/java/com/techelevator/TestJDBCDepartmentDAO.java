@@ -57,7 +57,7 @@ public class TestJDBCDepartmentDAO {
 	}
 	
 	@Test 
-	public void testCreateDepartmentAndGetDepartmentById() {
+	public void testCreateDepartment() {
 		Department dep = new Department();
 		dep.setName("Ultimate_Legends");
 		dao.createDepartment(dep);
@@ -77,6 +77,7 @@ public class TestJDBCDepartmentDAO {
 		assertDepartmentsAreEqual(dep, departments.get(0));
 	}
 	
+	@Test
 	public void testSaveDepartment() {
 		List<Department> ledges = dao.searchDepartmentsByName("Legends");
 		Department ledge = ledges.get(0);
@@ -85,6 +86,19 @@ public class TestJDBCDepartmentDAO {
 		Department ledgeRevived = dao.getDepartmentById(ledge.getDepartmentId());
 		Assert.assertEquals(ledge.getDepartmentId(), ledgeRevived.getDepartmentId());
 		Assert.assertEquals("Super_Legends", ledgeRevived.getName());
+	}
+	
+	@Test
+	public void testGetDepartmentById() {
+		Department aDepartment = new Department();
+		aDepartment.setDepartmentId(1212L);
+		aDepartment.setName("XXYYZZ");
+		dao.createDepartment(aDepartment);
+		Department returnedDepartment = new Department();
+	
+		returnedDepartment.setDepartmentId(aDepartment.getDepartmentId());
+		returnedDepartment.setName(aDepartment.getName());
+		Assert.assertEquals(aDepartment, returnedDepartment);
 	}
 	
 	private void assertDepartmentsAreEqual(Department expected, Department actual) {
