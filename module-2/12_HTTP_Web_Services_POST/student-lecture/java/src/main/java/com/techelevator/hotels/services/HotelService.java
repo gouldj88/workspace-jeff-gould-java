@@ -13,37 +13,77 @@ import java.util.Random;
 
 public class HotelService {
 
-  private final String BASE_URL;
-  private final RestTemplate restTemplate = new RestTemplate();
-  private final ConsoleService console = new ConsoleService();
+  private final String BASE_URL;									// Hold the base URL for our server - comes from the user
+  private final RestTemplate restTemplate = new RestTemplate();		// Define a RestTemplate object so we can use HTTP requests with APIs
+  private final ConsoleService console = new ConsoleService();		// Instantiate a ConsoleService to handle user terminal interactions
 
-  public HotelService(String url) {
-    BASE_URL = url;
+  public HotelService(String url) {		// Constructor for the HotelService that accepts the base URL for our server
+    BASE_URL = url;						// Assign URL path to the base URL variable
   }
 
   /**
-   * Create a new reservation in the hotel reservation system
+   * Create a new reservation in the hotel reservation system that is hosted on our API server
    *
-   * @param newReservation
-   * @return Reservation
+   * @param newReservation	- a String with the reservation data
+   * @return Reservation	- reservation object that was added to the API resources
    */
   public Reservation addReservation(String newReservation) {
-    // TODO: Implement method
-    return null;
+    // to add a reservation to the API server, we need a POST HTTP request
+	  Reservation aReservation = makeReservation(newReservation);	// Use the helper method to create a reservation object
+	  
+	  // Now that we have a Reservation object we need to use API to add it to the API resource
+	  // We will use an HTTP Post request to do so
+	  // An HTTP Post requires headers and the data to be added in the body of the request
+	  // 
+	  // Create the headers for the HTTP Post
+	  
+	  HttpHeaders theHeaders = new HttpHeaders();				// Define a header object to hold the header information for the request
+	  theHeaders.setContentType(MediaType.APPLICATION_JSON);	// Set the content attribute of the headers to be APPLICATION_JSON
+	  															// MediaType is a group of valid constants for request data types
+	  
+	  // An HttpEntity object contains a properly formatted request for use in RestTemplate methods
+	  // We use HttpEntity objects to format our request so we don't have to know how to do it ourselves
+	  // An HttpEntity constructor takes the object containing the data to send and an object with the HttpHeaders object
+	  
+	  HttpEntity anEntity = new HttpEntity(aReservation, theHeaders);	// Instantiate an HttpEntity object with the 
+	  																	// reservation object to be added to the API resources
+	  																	// and the headers
+	  // Call the API with a POST request and the HttpEntity we created
+	  
+	  //						  do a POST			url					   request   this type of data returned
+	  aReservation = restTemplate.postForObject(BASE_URL + "reservations", anEntity, Reservation.class);
+			 	  
+	  return aReservation;
   }
 
   /**
    * Updates an existing reservation by replacing the old one with a new
    * reservation
    *
-   * @param CSV
-   * @return
+   * @param CSV  a comma delimited string with the new data
+   * @return Reservation - return the Reservation object used to update
    */
   public Reservation updateReservation(String CSV) {
-    // TODO: Implement method
-    return null;
+    // To update, we use a PUT HTTP request
+	  
+	Reservation aReservation = makeReservation(CSV);	// Use helper method to create a new Reservation object to send to the API server
+	
+	// Create the headers
+	HttpHeaders theHeaders = new HttpHeaders();
+	
+	// Set the content type in the headers
+	theHeaders.setContentType(MediaType.APPLICATION_JSON);
+	
+	// Create an HttpEntity to format the request properly for the data and headers
+	HttpEntity anEntity = new HttpEntity(aReservation, theHeaders);
+	
+	// Call the API with an HTTP PUT to update the Reservation on the API resource
+	restTemplate.put(BASE_URL + "reservations/" + aReservation.getId(), anEntity);	// Http PUT odes not return anything
+	
+    return aReservation;
   }
 
+  
   /**
    * Delete an existing reservation
    *
@@ -53,6 +93,14 @@ public class HotelService {
     // TODO: Implement method
   }
 
+  /* DON'T MODIFY ANY METHODS BELOW */
+  /* DON'T MODIFY ANY METHODS BELOW */
+  /* DON'T MODIFY ANY METHODS BELOW */
+  /* DON'T MODIFY ANY METHODS BELOW */
+  /* DON'T MODIFY ANY METHODS BELOW */
+  /* DON'T MODIFY ANY METHODS BELOW */
+  /* DON'T MODIFY ANY METHODS BELOW */
+  /* DON'T MODIFY ANY METHODS BELOW */
   /* DON'T MODIFY ANY METHODS BELOW */
 
   /**
@@ -145,6 +193,8 @@ public class HotelService {
     return reservation;
   }
 
+  
+  // Helper method to instantiate a Reservation object from a comma-delimited String
   private Reservation makeReservation(String CSV) {
     String[] parsed = CSV.split(",");
 
