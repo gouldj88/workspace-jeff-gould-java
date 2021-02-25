@@ -1,5 +1,8 @@
 package com.techelevator.services;
 
+
+
+
 import com.techelevator.models.Auction;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -57,8 +60,10 @@ public class AuctionService {
         Auction[] auctions = null;
         try {
             auctions = restTemplate.getForObject(API_URL + "?currentBid_lte=" + price, Auction[].class);
+            
         } catch (RestClientResponseException ex) {
             console.printError("No auctions found. Please try again.");
+            
         } catch (ResourceAccessException ex) {
             console.printError("A network error occurred.");
         }
@@ -66,19 +71,68 @@ public class AuctionService {
     }
 
     public Auction add(String auctionString) {
-        // place code here
-        return null;
-    }
+    	
+    	Auction anAuction = makeAuction(auctionString);
+    	
+  	  	HttpHeaders theHeaders = new HttpHeaders();
+  	  	theHeaders.setContentType(MediaType.APPLICATION_JSON);
+  	  
+  	  	HttpEntity anEntity = new HttpEntity(anAuction, theHeaders); 
+  	 	
+  	    try {
+  	    	anAuction = restTemplate.postForObject(API_URL, anEntity, Auction.class);
+  	    }
+  	    catch (RestClientResponseException exceptionObject) {
+  	    	console.printError(exceptionObject.getRawStatusCode() + exceptionObject.getStatusText());
+  	    	return null;
+  	    }
+  	    catch (ResourceAccessException exceptionObject) {
+  	    	console.printError(exceptionObject.getMessage());
+  	    	return null;
+  	    }
+  	    
+  	    return anAuction;
+  	  }
+
 
     public Auction update(String auctionString) {
-        // place code here
-        return null;
+        Auction anAuction = makeAuction(auctionString);   
+        
+        HttpHeaders theHeaders = new HttpHeaders();       
+        
+        theHeaders.setContentType(MediaType.APPLICATION_JSON);
+        
+        HttpEntity anEntity = new HttpEntity(anAuction, theHeaders);
+       
+        try {
+            restTemplate.put(API_URL + "/" + anAuction.getId(), anEntity);
+        }
+        catch (RestClientResponseException exceptionObject) {  // if there is a response error display status code and message
+        	console.printError(exceptionObject.getRawStatusCode() + exceptionObject.getStatusText());
+        	return null;
+        }
+        catch (ResourceAccessException exceptionObject) {      // if there is an error with the API trying to access the data resource
+        	console.printError(exceptionObject.getMessage());
+        	return null;
+        }
+        return anAuction;
     }
 
     public boolean delete(int id) {
-    	// place code here
-    	return false; 
-    }
+  	  try {
+		  restTemplate.delete(API_URL + "/" + id);  // Call the API with a HTTP DELETE request for the id given
+	  }
+	  catch (RestClientResponseException exceptionObject) {  // if there is a response error display status code and message
+	    	console.printError(exceptionObject.getRawStatusCode() + exceptionObject.getStatusText());
+	    	return false;
+	  }
+	  catch (ResourceAccessException exceptionObject) {      // if there is an error with the API trying to access the data resource
+	    	console.printError(exceptionObject.getMessage());
+	    	return false;
+	  	}
+	  return true;
+	 }
+  
 
     private HttpEntity<Auction> makeEntity(Auction auction) {
         HttpHeaders headers = new HttpHeaders();
