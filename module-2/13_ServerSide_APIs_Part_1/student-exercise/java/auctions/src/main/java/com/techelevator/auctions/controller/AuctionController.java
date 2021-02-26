@@ -8,10 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-
-
-
-
 public class AuctionController {
 
     private AuctionDAO dao;
@@ -20,13 +16,13 @@ public class AuctionController {
         this.dao = new MemoryAuctionDAO();
     }
     
-	/*
-	 * @RequestMapping(path = "/auctions", method = RequestMethod.GET) public
-	 * List<Auction> anAuction() {
-	 * System.out.println("This is called with /auctions"); return dao.list();
-	 * 
-	 * }
-	 */
+	
+//	  @RequestMapping(path = "/auctions", method = RequestMethod.GET) 
+//	  public List<Auction> anAuction() {
+//		  System.out.println("This is called with /auctions"); 
+//		  return dao.list();
+//	  }
+	 
     
     @RequestMapping(path = "/auctions/{id}", method = RequestMethod.GET)
     public Auction get(@PathVariable int id) {
@@ -46,16 +42,21 @@ public class AuctionController {
     	
     }
     
-	/*
-	 * @RequestMapping(path = "/auctions/currentBid_lte", method =
-	 * RequestMethod.GET) public List<Auction> searchPrice(@PathVariable double
-	 * currentBid) { return dao.searchByPrice(currentBid); }
-	 */
-    
-    @RequestMapping(path = "/auctions/currentBid_lte", method = RequestMethod.GET)
-    public List<Auction> titlePrice(@PathVariable String title, @PathVariable double currentBid) {
-    	return dao.searchByTitleAndPrice(title, currentBid);
+    @RequestMapping(path = "", method = RequestMethod.GET)
+    public List<Auction> list(@RequestParam(value = "title_like", defaultValue = "") String title,
+    		@RequestParam(value = "currentBid_lte", defaultValue = "0") double currentBid) {
+    	if (!title.isEmpty() && currentBid > 0) {
+    		return dao.searchByTitleAndPrice(title, currentBid);
+    	}
+    	else if(!title.isEmpty()) {
+    		return dao.searchByTitle(title);
+    	}
+    	else if(currentBid > 0) {
+    		return dao.searchByPrice(currentBid);
+    	}
+    	else {
+    		return dao.list();
+    	}
     }
     
-
 }

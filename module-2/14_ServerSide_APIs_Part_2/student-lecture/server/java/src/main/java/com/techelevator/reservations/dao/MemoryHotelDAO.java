@@ -9,7 +9,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-@Component
+@Component	// Tells Spring MVC there might be something you care about in this file
 public class MemoryHotelDAO implements HotelDAO {
 
     private List<Hotel> hotels = new ArrayList<>();

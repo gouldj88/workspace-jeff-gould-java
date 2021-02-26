@@ -13,14 +13,14 @@ import com.techelevator.reservations.exception.ReservationNotFoundException;
 import com.techelevator.reservations.models.Hotel;
 import com.techelevator.reservations.models.Reservation;
 
-@Component
+@Component	// Tells Spring MVC there might be something you care about in this file
 public class MemoryReservationDAO implements ReservationDAO {
 
     private List<Reservation> reservations = new ArrayList<>();
-    private HotelDAO hotelDAO;
+    private HotelDAO hotelDAO;	// Defines a reference to the HotelDAO -  to use HotelDAO methods
 
-    public MemoryReservationDAO(HotelDAO hotelDAO) {
-        this.hotelDAO = hotelDAO;
+    public MemoryReservationDAO(HotelDAO hotelDAO) {	// Constructor receives a HotelDAO object as a parameter
+        this.hotelDAO = hotelDAO;						// Assigns HotelDAO object it receives to the hotelDAO reference
         initializeReservationData();
     }
 

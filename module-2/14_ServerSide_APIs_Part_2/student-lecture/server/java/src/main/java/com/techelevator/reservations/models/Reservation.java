@@ -6,12 +6,28 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 public class Reservation {
-
+	
+	// We can use validation annotations to verify data is what we expect
+	//     aka Bean Validation
+	// The controller processing objects of this class must be told to apply validation criteria by adding @Valid to the parameter
+	
+	@Min (value=1)				// make sure the min value for id is at least 1
     private int id;
+	
+	@Min (value=1)				// make sure min value for hotelID is at least 1
     private int hotelID;
+	
+	@NotBlank
     private String fullName;
+    
+    @NotNull					// make sure checkinDate is not null
     private String checkinDate;
+    
+    @NotNull					// make sure checkoutDate is not null
     private String checkoutDate;
+    
+    @Min(value=1, message="Must have at least one guest for a reservations")
+    @Max(value=4, message="Cannot have more than four guests")
     private int guests;
 
     public Reservation() {

@@ -83,9 +83,11 @@ public class HotelController {
      * @param reservation
      * @param hotelID
      */
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.CREATED)		// Set HTTP Status when the controller successfully adds resource to CREATED
     @RequestMapping(path = "/hotels/{id}/reservations", method = RequestMethod.POST)
-    public Reservation addReservation(@RequestBody Reservation reservation, @PathVariable("id") int hotelID)
+    
+    // The @Valid annotation in the parameter list of the method tells the server to apply any validation annotations present in any class
+    public Reservation addReservation(@Valid @RequestBody Reservation reservation, @PathVariable("id") int hotelID)
             throws HotelNotFoundException {
         return reservationDAO.create(reservation, hotelID);
     }
