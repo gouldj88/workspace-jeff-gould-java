@@ -1,9 +1,11 @@
 package com.techelevator.api.review.client;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.springframework.web.client.RestTemplate;
 
 import com.techelevator.api.review.client.model.Department;
 import com.techelevator.api.review.client.model.DepartmentDAO;
@@ -75,7 +77,7 @@ public class ProjectsCLI {
 		this.menu = new Menu(System.in, System.out);
 		// postgres is a Data Base Mangager which contains many databases which contains many tables
 		BasicDataSource dataSource = new BasicDataSource();
-		dataSource.setUrl("jdbc:postgresql://localhost:5432/projects");
+		dataSource.setUrl("jdbc:postgresql://localhost:5432/apireview");
 		dataSource.setUsername("postgres");
 		dataSource.setPassword("postgres1");
 		
@@ -142,8 +144,15 @@ public class ProjectsCLI {
 
 	private void handleListAllDepartments() {
 		printHeading("All Departments");
-		List<Department> allDepartments = departmentDAO.getAllDepartments();
-		listDepartments(allDepartments);
+//		The DAO call was replaced by an API call
+//		List<Department> allDepartments = departmentDAO.getAllDepartments();
+		RestTemplate callApi = new RestTemplate();  // Instantiate a RestTemplate to manage our API calls
+		Department[] deptArray;						// Hold the results from the API call as an array
+													// This is needed because RestTemplate has no easy way to return a List
+		// Call the api to get the data back as an array of Department objects
+		deptArray = callApi.getForObject("http://localhost:8080/departments", Department[].class);
+		// Call the method to display the departments with the Department array converted to a list using the Array.asList()
+		listDepartments(Arrays.asList(deptArray));  
 	}
 
 	private void handleDepartmentSearch() {
