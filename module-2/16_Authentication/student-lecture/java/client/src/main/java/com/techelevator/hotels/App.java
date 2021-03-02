@@ -48,14 +48,18 @@ public class App {
                     Reservation[] reservations = hotelService.listReservations();
                     int reservationId = consoleService.promptForReservation(reservations, "Delete Reservation");
                     hotelService.deleteReservation(reservationId);
-                } else if (menuSelection == 6) {
-                    String credentials = consoleService.promptForLogin();
-                    if( credentials.split(",").length == 2 ) {
+                } else if (menuSelection == 6) {							// LOGIN OPTION
+                    String credentials = consoleService.promptForLogin();	//		Use the console service to get username and password
+                    if( credentials.split(",").length == 2 ) {				//		DId the ConsoleService return 2 values separated by a comma?
+                    	// call the login() method of the authentication service with the username,password that was entered
+                    	// the authenticationService will send us back the HTTP response it got from the Authentication server
+                    	// ResponseEntity is a class for objects representing an HTTP response - typically a MAP is used
+                    	// to hold the response data.
                         ResponseEntity<Map> response = authenticationService.login(credentials);
-                        if (response.hasBody()) {
-                            String token = (String) response.getBody().get("token");
-                            hotelService.AUTH_TOKEN = token;
-                            System.out.println("Login Successful");
+                        if (response.hasBody()) {										// If the response has a body (is there any data in the response?)
+                            String token = (String) response.getBody().get("token");	//	get the value for the "token" attribute and store it
+                            hotelService.AUTH_TOKEN = token;							// Store the token in the HotelService variable to hold it
+                            System.out.println("Login Successful");						// Tell the user that the login was successful
                         }
                     } else {
                         consoleService.printError("Please enter username and password separated by a comma.");

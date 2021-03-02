@@ -19,12 +19,14 @@ public class AuthenticationService {
     }
 
     public ResponseEntity<Map> login(String credentials) throws AuthenticationServiceException {
-        LoginDTO loginDTO = new LoginDTO(credentials);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<LoginDTO> entity = new HttpEntity<>(loginDTO, headers);
-        ResponseEntity<Map> response = null;
+        LoginDTO loginDTO = new LoginDTO(credentials);			// Instantiate a LoginDTO object with a string passed to use
+        HttpHeaders headers = new HttpHeaders();				// Instantiate headers for the HTTP request
+        headers.setContentType(MediaType.APPLICATION_JSON);		// Set the content-type (what we are sending) to JSON
+        HttpEntity<LoginDTO> entity = new HttpEntity<>(loginDTO, headers);	// Instantiate an HTTP entity to have a properly formatted request
+        																	// 		request with the headers and data we want to send
+        ResponseEntity<Map> response = null;		// Instantiate a response object to hold the response from the API call
         try {
+        	// Make the API call to the server with the "/login" path and the request we set up
             response = restTemplate.exchange(BASE_URL + "/login", HttpMethod.POST, entity, Map.class);
         } catch(RestClientResponseException ex) {
             if (ex.getRawStatusCode() == 401 && ex.getResponseBodyAsString().length() == 0) {
