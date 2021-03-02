@@ -43,17 +43,20 @@ public class AuctionController {
         return dao.get(id);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'CREATOR')")
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping( path = "", method = RequestMethod.POST)
     public Auction create(@Valid @RequestBody Auction auction) {
         return dao.create(auction);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'CREATOR')")
     @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
     public Auction update(@Valid @RequestBody Auction auction, @PathVariable int id) throws AuctionNotFoundException {
         return dao.update(auction, id);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
     public void delete(@PathVariable int id) throws AuctionNotFoundException {
@@ -61,8 +64,8 @@ public class AuctionController {
     }
 
     @RequestMapping( path = "/whoami")
-    public String whoAmI() {
-        return "";
+    public String whoAmI(Principal userInfo) {
+        return userInfo.getName();
     }
 
 }
