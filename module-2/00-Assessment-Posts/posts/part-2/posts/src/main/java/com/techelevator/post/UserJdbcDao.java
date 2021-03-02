@@ -21,14 +21,32 @@ public class UserJdbcDao implements UserDao {
 
 	@Override
 	public void save(User newUser) {
-		// Implement this method to save user to database
+		
+		String saveUser = "INSERT into USERS (id, first_name, last_name, email, role, created) " +
+						  "VALUES(?, ?, ?, ?, ?, ?)";
+		
+		newUser.setId(GetNextUserID());
+		
+		jdbcTemplate.update(saveUser, newUser.getId(), newUser.getFirstName(), newUser.getLastName(), newUser.getEmail(), newUser.getRole(), Date.valueOf(newUser.getCreated()));
+
 	}
 
 	@Override
 	public List<User> getAllUsers() {
-		// Implement this method to pull in all users from database
-
-		return null;
+		List<User> listOfUsers = new ArrayList();
+		
+		User aUser = null;
+		
+		String sqlAllUsers = "SELECT id, first_name, last_name, email, role, created " + 
+							 "FROM users";
+		
+		SqlRowSet allUsers = jdbcTemplate.queryForRowSet(sqlAllUsers);
+		
+		while(allUsers.next()) {
+			aUser = mapRowToUser(allUsers);
+			listOfUsers.add(aUser);
+		}
+		return listOfUsers;
 	}
 
 	private User mapRowToUser(SqlRowSet results) {
@@ -40,6 +58,17 @@ public class UserJdbcDao implements UserDao {
 		userRow.setRole(results.getString("role"));
 		userRow.setCreated(results.getDate("created").toLocalDate());
 		return userRow;
+	}
+	
+	public long GetNextUserID() {
+		
+		SqlRowSet nextIdResult = jdbcTemplate.queryForRowSet("SELECT nextval('users_id_seq')");
+		
+		if(nextIdResult.next()) {               
+			return nextIdResult.getLong(1);    
+		} else {                               
+			throw new RuntimeException("Something went wrong while getting an id for the new city");
+		}
 	}
 
 }
