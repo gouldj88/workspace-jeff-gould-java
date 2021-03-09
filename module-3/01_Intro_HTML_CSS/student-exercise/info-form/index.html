@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css"/>
+    <title>Form</title>
+</head>
+<body>
+    <main>
+        
+        <form method="POST" action="https://60466d2df0c6dc00177b1e35.mockapi.io/informationForm">
+            <div>
+            <label for="nameField">Name: </label>
+            <input type="text" id="nameField" name="nameField"/>
+            </div>
+
+            <div>
+            <label for="emailField">Email: </label>
+            <input id="email" name="email" type="email"/>
+            </div>
+
+            <div>
+            <label for="dateOfBirth">Date of Birth: </label>
+            <input id="dateOfBirth" name="dateOfBirth" type="date" />
+            </div>
+
+            <div>
+            <label for="favcolor">Favorite Color:</label>
+            <input type="color" id="favcolor" name="favcolor" value="#ff0000"/>  
+            </div>
+
+            <div>
+            <label for="numberField">Favorite Number: </label>
+            <input type="number" id="numberField" name="numberField"/>
+            </div>
+
+            <div> 
+            <label for="dataCorrect">Confirm Data Correct: </label>
+            <input type="checkbox" id="dataCorrect" name="dataCorrect"/>
+            </div>
+
+            <input type="submit"/>
+        
+        </form>
+    </main>
+</body>
+</html>

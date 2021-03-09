@@ -1,0 +1,15 @@
+/* In CSS, comment starts with slash-asterisk and ends with */
+
+body {  /*style the body element in the HTML*/
+    font-family: Arial, Helvetica, sans-serif; /*give the browser our font preferences */
+
+}
+
+img { /* style all the image tags to be smaller */
+    height: 200px;
+}
+
+h1 { /* style all the h1 tags to be a color */
+    font-size: 32px;
+    color: cornflowerblue;
+}

@@ -1,0 +1,5 @@
+1_12_2021 Notes
+git add - put stuff in a box to ship
+git commit - seal box for shipment - everything you want to ship is in the box
+git push commit - ship the box to origin main aka your repo bucket
+
