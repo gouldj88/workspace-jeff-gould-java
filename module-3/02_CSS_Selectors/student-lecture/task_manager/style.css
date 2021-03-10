@@ -78,9 +78,3 @@ header > h1 {
     font-size: 1.1rem; /* set font size to slightly bigger than the document */
 }
 
-section > div {
-    display: inline-block;
-    width: 33%;
-    padding-right: 20px;
-    margin-top: 20px;
-}
