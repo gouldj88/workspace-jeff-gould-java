@@ -1,0 +1,171 @@
+/* These are our colors for the page */
+:root {
+   /* green */
+   --primary-color: rgba(156, 205, 80, 1.0); 
+   --primary-color-border: rgba(156, 205, 80, 0.7);
+   /* blue */
+   --secondary-color: rgba(129, 203, 207, 1);
+   /* white */
+   --tertiary-color: rgb(255, 255, 255);
+   --tertiary-color-border: rgba(255, 255, 255, 0.6);   
+   --text-color: rgba(30, 31, 33, .9);   
+   --blue: rgba(129, 200, 225, 1);
+}
+
+/* Controls the default size and font for our page elements */
+* {
+   box-sizing: border-box;
+   font-family: "Roboto Slab", serif;
+}
+
+nav ul {
+   margin: 0;
+   padding: 0;
+}
+
+/* Limits the size of our leprauchaun image to the container */
+section#order-now img {
+   width: 100%;
+}
+
+
+/* Zooms the image to retain aspect ratio. This is OK if the image 
+   is repetitive like four-leaf clovers 
+*/
+main img {
+   object-fit: cover;
+}
+
+/* Changes the default styling for hyperlinks */
+a {
+   color: var(--text-color);
+   text-decoration: none;
+}
+
+a:hover {
+   text-decoration: underline;
+}
+
+/* Used to center an item */
+.center {
+   display: block;
+   margin: 0 auto;
+}
+
+/*
+   Add a 🍀 for the <li> in the <main>
+*/
+main li:before {
+   content: '🍀'; 
+   margin-left: -31px;
+   padding-right: 8px;
+}
+
+
+/* 
+   <header> styles  
+*/
+
+header img {
+   height: 100px;
+   width: auto;
+}
+
+/*
+   <img> in <main> styles
+*/
+
+main img {
+   height: 350px;
+   width: 35%;
+}
+
+body {
+   background-color: var(--secondary-color);
+}
+
+/* Define the grid containing 6 columns where the middle 4 are twice the weidth of the first and last */
+body {
+   display: grid; /* use the grid layout for the display */
+   grid-template-columns: 1fr 2fr 2fr 2fr 2fr 1fr;
+   grid-template-areas: /* define rows and assign names to the columns in the row*/
+   ".   header        nav          nav     nav    ."
+   ".   main          main         main    main   ."
+   ".   order-now     order-now    store   store  ."
+   
+  
+   ; 
+   grid-gap: 6px;
+}
+
+/* assign elements to the grid area rows and columns */
+header {                /* assign the header element to a grid area */
+   grid-area: header;
+}
+
+nav {                   /* assign the nav element to a grid area */
+   grid-area: nav;
+}
+
+main {                  /* assign the main element to a grid area */
+   grid-area: main;
+}
+
+#order-now {            /* assign the order-now id to a grid area */
+   grid-area: order-now;
+}
+
+#store {                /* assign the store id element to a grid area */
+   grid-area: store;    /* could have used the selector section#order-now too */
+}
+
+/* style the nav element to stop being an ordered list with bullets */
+/* and to go across the page and look like buttons */
+
+nav ul { /* style the ul child of the nav element */
+   display: flex;          /* style the grid cell with the nav as a row */
+   flex-direction: row;    /* make the content display as a row instead of a column */
+   justify-content: space-between;  /*put space between the items*/
+   align-items: flex-end;
+}
+
+/* style each individual list item */
+/* remove bullet points */
+/* make look like button */
+/* center the text in the button */
+nav ul li {  /* style the li child of a ul that is a child of nav */
+   /* Layout */
+   list-style: none; /* remove the bullet points */
+   width: calc(100% / 6); /* width to be the same for all items regardless of viewport size */
+
+   /* make elements look like buttons */
+   background-color: var(--primary-color);  /* set the button background color */
+   line-height: 50px;                       /* set the button height */
+   border-radius: 5px;                      /* slightly round the corners of the buttons */
+   text-align: center;                      /* center the text in the li container we defined */
+
+}
+
+/* style the text on the buttons */
+/* convert to uppercase and bold */
+nav li a {  /* style the a tag that's a child of a list item tag thats a child of a nav */
+   text-transform: uppercase;    /* capitalize the text */
+   font-weight: bold;
+}
+
+/* align the buttons to the bottom of the container */
+nav {
+   align-self: end;  /* override the flex default alignment for each individual item */
+}
+
+/* style the main element (second row of page) */
+main {
+   display: flex;
+   flex-direction: row; /* change the default display from column to row */
+   background-color: var(--tertiary-color);
+   
+}
+
+main img {
+   margin: 10px;
+}
