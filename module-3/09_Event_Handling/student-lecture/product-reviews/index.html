@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Product Reviews</title>
+    <!-- This html uses features of the bootstrap framework (not covered in class)          -->
+    <!-- We will not go into significant detail on any bootstrap framework concepts         -->
+    <!-- We will only tell you what we need to know for the boostrap that we use            -->
+    <!-- Many bootstrap features are implemented using classes                              -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
         crossorigin="anonymous">
     <link rel="stylesheet" href="css/main.css">
@@ -16,15 +20,17 @@
 
         <h2 id="page-title">Product Reviews for <span class="name"></span></h2>
         <p class="description"></p>
+        <!-- class='d-none' is a bootstrap class that says do not display this element  -->
+        <!-- form-control and form-control-lg are also bootstrap classes                -->
         <input id="inputDesc" class="d-none form-control form-control-lg" type="text"/>
         <div class="clearfix"></div>
 
         <div class="float-right">
-            <button id="btnToggleForm" type="button" class="btn btn-outline-success btn-sm"">Add Review</button>
+            <button id="btnToggleForm" type="button" class="btn btn-outline-success btn-sm">Add Review</button>
         </div>
 
         <div class="clearfix"></div>
-        
+        <!-- class='d-none' is a bootstrap class that says do not display this element  -->
         <form class="d-none">
             <div class="form-group">
                 <label for="name">Name</label>
@@ -54,7 +60,10 @@
             <div class="clearfix"></div>
             <hr>
         </form>
-
+<!-- a template is a layout for a section of a page -->
+<!-- a model for html you want to include in your page -->
+<!-- used to make manipulating the DOM easier -->
+<!-- this template is a model for a product review to be displayed on our page -->
         <template id="review-template">
             <div class="review">
                 <h4></h4>
