@@ -46,6 +46,6 @@ button {
   border-radius: 4px;
   font-size: 20px;
 }
-.hidden {
+.hidden { /* adding 'hidden' to the class of an element will hide it */
   display:none;
 }
