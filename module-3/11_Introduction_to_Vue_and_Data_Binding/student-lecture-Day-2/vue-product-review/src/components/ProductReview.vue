@@ -2,7 +2,78 @@
     <div class='main'>  <!-- Place our code in the main part of this page -->
        <h2>Product Reviews for {{ title }}</h2> <!-- Use a mustache {{variable}} to indicate you want data from the component placed here -->
        <p class='description'>{{words}}</p> <!-- mustache expression - {{variable}} -->
+
+       <!-- The rating boxes will go here -->
+       <div class="well-display">
+
+          <div class="well">
+            <span class="amount">{{averageRating}}</span> <!-- span lets us style the middle of an element -->
+            Average
+          </div>
+
+          <div class="well"> <!--1-star rating box-->
+            <span class="amount">{{numberOfOneStarReviews}}</span> <!-- span lets us style the middle of an element -->
+            1 Star Rating
+          </div>
+
+          <div class="well"> <!--2-star rating box-->
+            <span class="amount">{{numberOfTwoStarReviews}}</span> <!-- span lets us style the middle of an element -->
+            2 Star Rating
+          </div>
+
+          <div class="well"> <!--3-star rating box-->
+            <span class="amount">{{numberOfThreeStarReviews}}</span> <!-- span lets us style the middle of an element -->
+            3 Star Rating
+          </div>
+
+          <div class="well"> <!--4-star rating box-->
+            <span class="amount">{{numberOfFourStarReviews}}</span> <!-- span lets us style the middle of an element -->
+            4 Star Rating
+          </div>
+
+          <div class="well"> <!--5-star rating box-->
+            <span class="amount">{{numberOfFiveStarReviews}}</span> <!-- span lets us style the middle of an element -->
+            5 Star Rating
+          </div>
+       </div>
+
+       <!-- We want to go throuh array of reviews in our data -->
+       <!-- and display the attributes for the review -->
+       <!-- Use a v-for loop to go through the array -->
+       <!-- syntax for a v-for: v-for=(element-name in array-name v-bind="key-field") -->
+       <!-- the 'key field' is used by v-for to uniquely identify instance on the page -->
+       <!-- the 'key field' does NOT have to be an existing attribute in the array -->
+       <!-- v-for will generate one html element for each element in the array -->
+       <div class="review" 
+            v-for="aReview in reviews" v-bind:key="aReview.id"
+            > <!-- Hold the display of the product review data -->
+            <h4>{{aReview.reviewer}}</h4> <!-- reviewer attribute from the array element -->
+            <!-- generate one star image based on the value in the rating-->
+
+            <!-- use a v-for to generate the img tags-->
+            <!-- v-for requires a name for an element in an array - we don't have an array of ratings -->
+            <!-- so it doesn't matter what name we use - we are using 'n' this time -->
+            <div class="rating">
+            <img
+                src="../assets/star.png"
+                v-for="n in aReview.rating" v-bind:key="n"
+            >
+            </div>
+
+            <h3>{{aReview.title}}</h3> <!-- title attribute from the array element -->
+            <p>{{aReview.review}}</p> <!--review attribute from the array element-->
+
+            <!-- add a checkbox for Favorite - tied to the favorited attribute in the array element -->
+            <!-- v-model ties a piece of data in the component to an element in the html-->
+            <!-- such that any change to the data on the web page is reflected in the data of the component -->
+            <!-- this is called two-way binding -->
+            <p>
+                Favorite?
+                <input type="checkbox" v-model="aReview.favorited">
+            </p>
+       </div>
     </div>
+
 </template>
 
 <script> // Our JavaScript code goes here
@@ -52,7 +123,80 @@ export default {  // Expose data from this code to external processes (like Vue)
               }
             ]
         }   // end of return
-    }   // end of data()
+    },   // end of data() - comma indicates there is more in the export than just the data
+
+   // Add a computed section to the export to perform calculations to achieve values we need
+   computed: {  // Stuff in here will be computed every time a value changes in the data
+                // Computed values are NOT functions - they are used as if they were variables
+
+
+      // Compute the average of all the ratings
+      // Go through the array of reviews and sum the rating values
+      // Divide the sum of the ratings by the number of ratings
+    averageRating() {
+      let sum = this.reviews.reduce((totalRatings, aReview) => {
+        return totalRatings + aReview.rating; // Add the current element's rating to the sum of the ratings
+      }, 0) // Initialize totalRating and make int a number
+      return sum/this.reviews.length // Return the average 
+    },
+
+  // Define a computed value to determine the number of one-star reviews in the reviews array
+  numberOfOneStarReviews() {
+  // need a place to hold the number of one-star reviews
+  // go through the array one element at a time, checking for 1-star reviews
+  //  (reduce the elements in the array to the number of 1-star reviews)
+  // We can use the .reduce() array function to do this!
+  //
+  // .reduce() function take one argument: a function that receives two arguments : reducer, anElement
+  //           reducer is the variable the array is reduced to - the nuberOfReviews in this example
+  //           anElement is the current element in the array
+  //
+
+  return this.reviews.reduce((currentCount, anElement) => {   // currentCount will have the number of 1-star reviews
+              if(anElement.rating === 1) {
+                currentCount++
+              }
+              return currentCount
+              }, 0) // ,0 initializes the reducer (currentCount) and sets its type to a number
+      },   // end of numberOfOneStarReviews
+
+  numberOfTwoStarReviews() {
+    return this.reviews.reduce((currentCount, anElement) => {
+              if(anElement.rating === 2) {
+                currentCount++
+              }
+              return currentCount
+              }, 0)
+      },   
+
+  numberOfThreeStarReviews() {
+    return this.reviews.reduce((currentCount, anElement) => {
+              if(anElement.rating === 3) {
+                currentCount++
+              }
+              return currentCount
+              }, 0)
+      },   
+
+  numberOfFourStarReviews() {
+    return this.reviews.reduce((currentCount, anElement) => {
+              if(anElement.rating === 4) {
+                currentCount++
+              }
+              return currentCount
+              }, 0)
+      },
+
+  numberOfFiveStarReviews() {
+    return this.reviews.reduce((currentCount, anElement) => {
+              if(anElement.rating === 5) {
+                currentCount++
+              }
+              return currentCount
+              }, 0)
+      }
+
+   } // end of computed section
 }  // end of export
 </script>
 
