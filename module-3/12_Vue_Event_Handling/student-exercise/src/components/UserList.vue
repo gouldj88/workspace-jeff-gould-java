@@ -64,7 +64,7 @@
       <button>Delete Users</button>
     </div>
 
-    <button>Add New User</button>
+    <button v-on:click="showForm = !showForm">Add New User</button>
 
     <form id="frmAddNewUser">
       <div class="field">
@@ -93,6 +93,7 @@ export default {
   name: "user-list",
   data() {
     return {
+      showForm: false,
       filter: {
         firstName: "",
         lastName: "",
