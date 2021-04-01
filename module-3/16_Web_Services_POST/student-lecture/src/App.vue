@@ -1,6 +1,12 @@
+
+<!-- This is the Vue home page -->
 <template>
   <div class="container">
-    <boards-list />
+    <boards-list /> <!-- This is a Vue component that is displayed on the home page -->
+    <!-- :key="$route.fullPath says to resolve to the full URL including any query strings -->
+    <!-- used to force a page reload when navigating back to the page -->
+    <!-- so any loading animation or transition logic will be displayed -->
+    <!-- any code in the created() hook will be run when navigating back to the page -->
     <router-view :key="$route.fullPath" class="routerView" />
   </div>
 </template>

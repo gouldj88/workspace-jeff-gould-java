@@ -2,10 +2,16 @@
   <div id="sideNav">
     <h1>My Kanban Boards</h1>
     <div class="boards">
+      <!-- This div will display an error message if one exists-->
+      <!-- v-show="errorMsg" != "" - display only if errorMsg is not empty -->
       <div class="status-message error" v-show="errorMsg !== ''">{{errorMsg}}</div>
       <div class="loading" v-if="isLoading">
         <img id="loadingImg" src="../assets/ping_pong_loader.gif" />
       </div>
+      <!-- this will be displayed only if the v-if above is false -->
+      <!-- display this when we are done loading the page -->
+      <!-- router-link will generate a <div> tag rather than <a> -->
+      <!-- to avoid the default behavior of <a> tag -->
       <router-link :to="{ name: 'Board', params: { id: board.id } }"
         class="board"
         v-for="board in this.$store.state.boards"
@@ -16,7 +22,11 @@
       >
         {{ board.title }}
       </router-link>
+      <!-- This button will be displayed only if the page is already loaded (!isLoading) -->
+      <!-- and the AddBoard component is not displayed -->
+      <!-- When the button is clicked we will set showAddBoard to true -->
       <button class="btn addBoard" v-if="!isLoading && !showAddBoard" v-on:click="showAddBoard = !showAddBoard">Add Board</button>
+      <!-- Display this form if the showAddBoard attribute is true -->
       <form v-if="showAddBoard">
         Board Title:
         <input type="text" class="form-control" v-model="newBoard.title" />
@@ -41,7 +51,7 @@ export default {
         title: '',
         backgroundColor: this.randomBackgroundColor()
       },
-      errorMsg: ''
+      errorMsg: '' // Hold any error message generated - displayed if it has a value
     };
   },
   created() {
