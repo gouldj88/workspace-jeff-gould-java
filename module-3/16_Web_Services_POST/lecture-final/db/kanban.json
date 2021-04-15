@@ -9,11 +9,6 @@
       "id": 31454,
       "title": "My Kanban Board #2",
       "backgroundColor": "#fb826f"
-    },
-    {
-      "title": "New Board",
-      "backgroundColor": "#27b6f9",
-      "id": 90585
     }
   ],
   "cards": [
@@ -306,16 +301,6 @@
       "date": "Mar 11th 2021",
       "status": "In Progress",
       "tag": "Q&A"
-    },
-    {
-      "boardId": 90585,
-      "title": "Nw Card",
-      "description": "Planned feature",
-      "status": "Planned",
-      "tag": "Feature Request",
-      "avatar": "https://randomuser.me/api/portraits/lego/1.jpg",
-      "date": "Apr 1st 2021",
-      "id": 97103
     }
   ],
   "comments": [

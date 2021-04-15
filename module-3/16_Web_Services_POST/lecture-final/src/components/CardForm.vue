@@ -30,7 +30,7 @@
 
 <script>
 import boardsService from "../services/BoardService";
-import moment from "moment";
+import moment from "moment"; // Access the moment data manipulation library
 
 export default {
   name: "card-form",
@@ -62,7 +62,7 @@ export default {
         status: this.card.status,
         tag: this.card.tag,
         avatar: "https://randomuser.me/api/portraits/lego/1.jpg",
-        date: moment().format("MMM Do YYYY")
+        date: moment().format("MMM Do YYYY") // Use moment to format the current date - Apr 2 2021
       };
 
       if (this.cardID === 0) {

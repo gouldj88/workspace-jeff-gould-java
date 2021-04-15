@@ -7,6 +7,9 @@
         <img src="../assets/animated-squirrel.gif" />
       </div>
       <div>
+        <!-- create a list of links to a router path called HotelDetail -->
+        <!-- Get the data for this element from the hotels array in Vuex store (index.js)-->
+        <!-- $store.state - indicates we want to access something in the Vuex data store -->
         <router-link :to="{ name: 'HotelDetail', params: { id: hotel.hotelID } }"
             class="hotel"
             v-for="hotel in this.$store.state.hotels"
@@ -41,13 +44,13 @@ export default {
        errorMsg: ''
       }   // End of return
   },  // End of data()
-  created() {
-    this.retrieveBoards();
-    this.isLoading = false;
+  created() { // Stuff to be done BEFORE the HTML is created by Vue and sent to the browser
+    this.retrieveBoards();  // Call retrieveBoards() method
+    this.isLoading = false; // indicate we are done loading
   },
   methods: {
-    retrieveBoards() {
-      HotelService.getHotels()
+    retrieveBoards() {              // Called from the created() hook
+      HotelService.getHotels()      // calling getHotels() in the HotelService object
       .then(response => {
                          this.$store.commit("SET_HOTELS", response.data);
                          this.isLoading = false;
